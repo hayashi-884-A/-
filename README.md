@@ -1,5 +1,5 @@
-CBtnHandler　　　クラスモジュール
-'=== CBtnHandler.cls ===
+
+'=== CBtnHandler.cls ===グラスモジュール
 Option Explicit
 
 Public WithEvents Btn As MSForms.CommandButton
@@ -10,10 +10,10 @@ Private Sub Btn_Click()
         Parent.HandleDayClick Btn
     End If
 End Sub
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-CCatHandler　　　クラスモジュール
-'=== CCatHandler.cls ===
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+'=== CCatHandler.cls ===グラス
 Option Explicit
 
 Public WithEvents Btn As MSForms.CommandButton
@@ -24,11 +24,12 @@ Private Sub Btn_Click()
         Parent.HandleCategoryClick Btn
     End If
 End Sub
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-frmCalendarRange　　　　　ユーザーフォーム
 
-'=== frmCalendarRange ===
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+
+'=== frmCalendarRange ===ユーザーフォーム
 Option Explicit
 Public ContinuousMode As Boolean  ' ← 連続入力モードかどうか
 '===========================================================
@@ -227,17 +228,17 @@ Private Sub BuildUI()
     Next i
 
     ' 日付ボタン（6×7=42）
-    Dim R As Long, c As Long, idx As Long
-    For R = 0 To 5
+    Dim r As Long, c As Long, idx As Long
+    For r = 0 To 5
         For c = 0 To 6
-            idx = R * 7 + c + 1
+            idx = r * 7 + c + 1
             Dim B As MSForms.CommandButton
             Set B = Controls.Add("Forms.CommandButton.1", "btnDay" & idx, True)
             With B
                 .caption = ""
                 .Width = CELL_W: .Height = CELL_H
                 .Left = gridLeft + c * (CELL_W + gap)
-                .Top = gridTop + R * (CELL_H + gap)
+                .Top = gridTop + r * (CELL_H + gap)
                 .Enabled = False
                 .TakeFocusOnClick = False
             End With
@@ -247,7 +248,7 @@ Private Sub BuildUI()
             Set hdl.Parent = Me
             mBtns.Add hdl
         Next c
-    Next R
+    Next r
 
     ' 1行の選択表示ラベル
     Set lblRange = Controls.Add("Forms.Label.1", "lblRange", True)
@@ -599,7 +600,7 @@ Private Sub ApplyTheme()
     ' ベース
     Me.BackColor = COLOR_BG
     On Error Resume Next
-    Me.Font.name = "Meiryo UI"
+    Me.Font.Name = "Meiryo UI"
     Me.Font.Size = 9
     On Error GoTo 0
 
@@ -827,44 +828,44 @@ Private Function LightenColor(ByVal c As Long, ByVal ratio As Double) As Long
     If ratio < -1 Then ratio = -1
     If ratio > 1 Then ratio = 1
 
-    Dim R As Long, G As Long, B As Long
-    R = (c And &HFF&)
+    Dim r As Long, G As Long, B As Long
+    r = (c And &HFF&)
     G = (c And &HFF00&) \ &H100&
     B = (c And &HFF0000) \ &H10000
 
     If ratio >= 0 Then
         ' 明るく（白方向へ線形補間）
-        R = CLng(R + (255 - R) * ratio)
+        r = CLng(r + (255 - r) * ratio)
         G = CLng(G + (255 - G) * ratio)
         B = CLng(B + (255 - B) * ratio)
     Else
         ' 暗く（黒方向へ縮小）
         Dim f As Double: f = 1 + ratio   ' 例: -0.35 → 0.65 倍
-        R = CLng(R * f)
+        r = CLng(r * f)
         G = CLng(G * f)
         B = CLng(B * f)
     End If
 
-    If R < 0 Then R = 0
+    If r < 0 Then r = 0
     If G < 0 Then G = 0
     If B < 0 Then B = 0
-    If R > 255 Then R = 255
+    If r > 255 Then r = 255
     If G > 255 Then G = 255
     If B > 255 Then B = 255
 
-    LightenColor = RGB(R, G, B)
+    LightenColor = RGB(r, G, B)
 End Function
 
 
 ' ★ 追加：背景色に対して見やすい文字色（白 or 濃グレー）を返す
 Private Function IdealTextColor(ByVal bg As Long) As Long
-    Dim R As Long, G As Long, B As Long
-    R = (bg And &HFF&)
+    Dim r As Long, G As Long, B As Long
+    r = (bg And &HFF&)
     G = (bg And &HFF00&) \ &H100&
     B = (bg And &HFF0000) \ &H10000
     ' 知覚輝度（おおよそ）：0～255
     Dim luma As Double
-    luma = 0.299 * R + 0.587 * G + 0.114 * B
+    luma = 0.299 * r + 0.587 * G + 0.114 * B
     If luma >= 160# Then
         IdealTextColor = p(13)   ' 明るい背景には濃グレー
     Else
@@ -968,13 +969,9 @@ End Sub
 
 
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-
-
-modAutomation　　　　標準モジュール
+標準モジュール
 
 Option Explicit
 
@@ -986,20 +983,20 @@ Public Sub Automation_ShowForm_EditSelectedRow()
     Dim ws As Worksheet: Set ws = ActiveSheet
 
     If TypeName(Selection) = "Range" Then
-        Dim R As Long: R = Selection.Row
-        If R >= DATA_START_ROW_015 Then
+        Dim r As Long: r = Selection.Row
+        If r >= DATA_START_ROW_015 Then
             Dim memo As String, cat As Variant
             Dim d1 As Variant, d2 As Variant
 
-            memo = CStr(ws.Cells(R, "B").Value)      ' イベント名／内容
-            cat = ws.Cells(R, "A").Value              ' 分類番号（1～10）
-            d1 = GetDateOrEmpty(ws.Cells(R, "D").Value) ' 開始日
-            d2 = GetDateOrEmpty(ws.Cells(R, "E").Value) ' 終了日
+            memo = CStr(ws.Cells(r, "B").Value)      ' イベント名／内容
+            cat = ws.Cells(r, "A").Value              ' 分類番号（1～10）
+            d1 = GetDateOrEmpty(ws.Cells(r, "D").Value) ' 開始日
+            d2 = GetDateOrEmpty(ws.Cells(r, "E").Value) ' 終了日
 
             ' D/E が空で、C に旧「m/d~m/d」書式が残っている場合のみ救済
             If IsEmpty(d1) And IsEmpty(d2) Then
                 Dim t0 As Date, t1 As Date
-                If ParseDateRange_015(CStr(ws.Cells(R, "C").Value), t0, t1) Then
+                If ParseDateRange_015(CStr(ws.Cells(r, "C").Value), t0, t1) Then
                     d1 = t0: d2 = t1
                 End If
             End If
@@ -1015,12 +1012,18 @@ With frmCalendarRange
     On Error GoTo 0
     .Show
 
-    If .ClickedOK Then
-        WriteMemoAndRange_ToRow ws, R, .MemoText, .SelectedStart, .SelectedEnd, .SelectedCategory
-        SetupPeriodConditionalFormatting_020
-        ApplyCategoryDividers_020 ws
-        GreyOutPastDateColumns_041 ws, CAL_DATE_ROW_015
-    End If
+If .ClickedOK Then
+    Dim curA As Variant, newCat As Long
+    curA = ws.Cells(r, "A").Value
+    newCat = IIf(.SelectedCategory > 0, .SelectedCategory, IIf(IsNumeric(curA), CLng(curA), 0))
+    WriteMemoAndRange_ToRow ws, r, .MemoText, .SelectedStart, .SelectedEnd, newCat
+
+    SetupPeriodConditionalFormatting_020
+    ApplyCategoryDividers_020 ws
+    GreyOutPastDateColumns_041 ws, CAL_DATE_ROW_015
+End If
+
+
 End With
 
 ' 表示後も必ず破棄（次回に持ち越さない）
@@ -1068,11 +1071,13 @@ Private Function GetDateOrEmpty(ByVal v As Variant) As Variant
 End Function
 
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+標準モジュール
 
 
-modCalendarRange　　　標準モジュール
+
+
 
 
 
@@ -1117,7 +1122,7 @@ End Sub
 Public Sub WriteMemoAndRange(ByVal memo As String, ByVal d1 As Date, ByVal d2 As Date, ByVal cat As Long)
 
     Dim ws As Worksheet
-    Dim R As Long
+    Dim r As Long
     Dim T As Date
     Dim ev As Boolean
 
@@ -1128,10 +1133,10 @@ Public Sub WriteMemoAndRange(ByVal memo As String, ByVal d1 As Date, ByVal d2 As
     On Error GoTo CleanUp
 
     ' 次の空行（B列基準）
-    R = FirstEmptyRow(ws, TARGET_COL, START_ROW)
+    r = FirstEmptyRow(ws, TARGET_COL, START_ROW)
 
     ' 1) B列：内容
-    ws.Cells(R, TARGET_COL).Value = memo
+    ws.Cells(r, TARGET_COL).Value = memo
 
     ' 2) D/E列：開始/終了（未入力補完＋大小入替）→ 同時書き込み
     If d1 <> 0 Or d2 <> 0 Then
@@ -1140,20 +1145,21 @@ Public Sub WriteMemoAndRange(ByVal memo As String, ByVal d1 As Date, ByVal d2 As
         If d2 < d1 Then T = d1: d1 = d2: d2 = T
 
 With ws
-    .Cells(R, "D").Value = d1
-    .Cells(R, "D").NumberFormatLocal = DATE_FMT_015
-    .Cells(R, "E").Value = d2
-    .Cells(R, "E").NumberFormatLocal = DATE_FMT_015
+    .Cells(r, "D").Value = d1
+    .Cells(r, "D").NumberFormatLocal = DATE_FMT_015
+    .Cells(r, "E").Value = d2
+    .Cells(r, "E").NumberFormatLocal = DATE_FMT_015
 End With
     End If
 
     ' 3) A列：分類（ここで並べ替えまで実施）
-    If cat > 0 Then
-        SetCategoryToRow_017 ws, R, cat, True
-        On Error Resume Next
-        Application.Run "ApplyPriorityColors_AllRows_016", ws
-        On Error GoTo 0
-    End If
+If cat > 0 Then
+    SetCategoryToRow_017 ws, r, cat, True   ' ← 既定ソート（A→D→E & 親昇格）
+Else
+    ' ★分類を変えていなくても D/E をいじったなら再ソートして親決定を揃える
+    ResortAllByCategory_032 ws
+End If
+
 
 CleanUp:
     Application.EnableEvents = ev   ' ★必ず復帰
@@ -1167,14 +1173,14 @@ End Sub
 
 
 Private Function FirstEmptyRow(ByVal ws As Worksheet, ByVal col As Long, ByVal startRow As Long) As Long
-    Dim R As Long: R = startRow
+    Dim r As Long: r = startRow
     Do While _
-        (LenB(ws.Cells(R, "B").Value2) <> 0) Or _
-        (LenB(ws.Cells(R, "D").Value2) <> 0) Or _
-        (LenB(ws.Cells(R, "E").Value2) <> 0)
-        R = R + 1
+        (LenB(ws.Cells(r, "B").Value2) <> 0) Or _
+        (LenB(ws.Cells(r, "D").Value2) <> 0) Or _
+        (LenB(ws.Cells(r, "E").Value2) <> 0)
+        r = r + 1
     Loop
-    FirstEmptyRow = R
+    FirstEmptyRow = r
 End Function
 
 
@@ -1194,16 +1200,16 @@ End Function
 
 
 '--- 指定行を上書き（B=メモ / D=開始 / E=終了 / A=分類）。Cは空欄維持 ---
-Public Sub WriteMemoAndRange_ToRow(ByVal ws As Worksheet, ByVal R As Long, _
+Public Sub WriteMemoAndRange_ToRow(ByVal ws As Worksheet, ByVal r As Long, _
                                    ByVal memo As String, ByVal d1 As Date, ByVal d2 As Date, ByVal cat As Long)
     Dim T As Date
     If ws Is Nothing Then Set ws = ActiveSheet
-    If R < DATA_START_ROW_015 Then Exit Sub
+    If r < DATA_START_ROW_015 Then Exit Sub
 
     Application.EnableEvents = False
 
     ' 1) メモ（B）
-    ws.Cells(R, "B").Value = memo
+    ws.Cells(r, "B").Value = memo
 
     ' 2) 日付（D/E）※未入力補完・大小入替
     If d1 = 0 And d2 = 0 Then
@@ -1212,38 +1218,413 @@ Public Sub WriteMemoAndRange_ToRow(ByVal ws As Worksheet, ByVal R As Long, _
         If d1 = 0 Then d1 = d2
         If d2 = 0 Then d2 = d1
         If d2 < d1 Then T = d1: d1 = d2: d2 = T
-        ws.Cells(R, "D").Value = d1: ws.Cells(R, "D").NumberFormatLocal = DATE_FMT_015
-        ws.Cells(R, "E").Value = d2: ws.Cells(R, "E").NumberFormatLocal = DATE_FMT_015
+        ws.Cells(r, "D").Value = d1: ws.Cells(r, "D").NumberFormatLocal = DATE_FMT_015
+        ws.Cells(r, "E").Value = d2: ws.Cells(r, "E").NumberFormatLocal = DATE_FMT_015
     End If
 
     ' 3) C は常に空欄（メモ専用のため自動は書かない）
-    ws.Cells(R, "C").ClearContents
+    ws.Cells(r, "C").ClearContents
 
-   ' 4) 分類（A）
+' 4) 分類（A）
 If cat > 0 Then
-    SetCategoryToRow_017 ws, R, cat, True   ' ← ここで並べ替えまで実施
-    ' ★追加：カテゴリ色をB列に再適用（全行）
-    On Error Resume Next
-    Application.Run "ApplyPriorityColors_AllRows_016", ws
-    On Error GoTo 0
+    ' 分類を明示指定 → 既定の並べ替え（A→D→E）＋親昇格が走る
+    SetCategoryToRow_017 ws, r, cat, True
+Else
+    ' ★分類を変えていなくても D/E を書き換えたなら必ず並べ替え（親昇格まで）
+    ResortAllByCategory_032 ws
 End If
 
 Application.EnableEvents = True
 
-' 5) 帯のCFと区切り線を貼り直し（B列の色が決まった“後”に呼ぶことが重要）
+' 5) 帯のCFと区切り線...
 SetupPeriodConditionalFormatting_020
 ApplyCategoryDividers_020 ws
 
+
+End Sub
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+
+標準モジュール
+
+'=== modDebugResort ===
+Option Explicit
+
+Public gDBG As Boolean           ' デバッグ ON/OFF フラグ
+Private Const DBG_SHEET As String = "デバッグ"
+
+'----------------- 操作系 -----------------
+Public Sub DBG_On()
+    gDBG = True
+    EnsureDbgSheet
+    DbgWrite "==== DBG ON ====", Now
+End Sub
+
+Public Sub DBG_Off()
+    DbgWrite "==== DBG OFF ====", Now
+    gDBG = False
+End Sub
+
+Public Sub DBG_Clear()
+    Dim sh As Worksheet
+    On Error Resume Next
+    Set sh = ThisWorkbook.Worksheets(DBG_SHEET)
+    On Error GoTo 0
+    If Not sh Is Nothing Then sh.Cells.Clear
+End Sub
+
+Public Sub DBG_DumpBlock_AtSelection()
+    Dim ws As Worksheet: Set ws = ActiveSheet
+    If TypeName(Selection) <> "Range" Then Exit Sub
+    Dim r As Long: r = Selection.Row
+    If r < DATA_START_ROW_015 Then Exit Sub
+
+    Dim aVal As Variant: aVal = ws.Cells(r, "A").Value
+    If Not IsNumeric(aVal) Then
+        DbgWrite "DUMP", "Aが数値でないため中断", "Row=" & r
+        Exit Sub
+    End If
+
+    Dim rStart As Long: rStart = r
+    Dim rEnd As Long: rEnd = r
+    Do While rStart > DATA_START_ROW_015 _
+        And IsNumeric(ws.Cells(rStart - 1, "A").Value) _
+        And CLng(ws.Cells(rStart - 1, "A").Value) = CLng(aVal)
+        rStart = rStart - 1
+    Loop
+    Do While IsNumeric(ws.Cells(rEnd + 1, "A").Value) _
+        And CLng(ws.Cells(rEnd + 1, "A").Value) = CLng(aVal)
+        rEnd = rEnd + 1
+    Loop
+
+    Debug_TraceBlock ws, rStart, rEnd, "ManualDump"
+End Sub
+
+Public Sub DBG_ScanAndMarkWrongParents(Optional ByVal ws As Worksheet)
+    If ws Is Nothing Then Set ws = ActiveSheet
+    Dim firstRow As Long: firstRow = DATA_START_ROW_015
+    Dim lastRow As Long: lastRow = LastDataRow_016(ws)
+    Dim r As Long: r = firstRow
+
+    EnsureDbgSheet
+    DbgWrite "SCAN_START", ws.Name, "Rows=" & firstRow & "-" & lastRow
+
+    Application.ScreenUpdating = False
+    Do While r <= lastRow
+        If IsNumeric(ws.Cells(r, "A").Value) Then
+            Dim aVal As Long: aVal = CLng(ws.Cells(r, "A").Value)
+            Dim rStart As Long: rStart = r
+            Dim rEnd As Long: rEnd = r
+            Do While rEnd + 1 <= lastRow _
+                And IsNumeric(ws.Cells(rEnd + 1, "A").Value) _
+                And CLng(ws.Cells(rEnd + 1, "A").Value) = aVal
+                rEnd = rEnd + 1
+            Loop
+
+            Dim rMax As Long, maxDur As Double
+            rMax = FindLongestRow(ws, rStart, rEnd, maxDur)
+
+            If rMax <> rStart Then
+                ' NGブロックをログ＆軽く目印（A列にコメント）
+                DbgWrite "MISMATCH", "A=" & aVal, "TopRow=" & rStart, "LongestRow=" & rMax, "Dur=" & Format(maxDur, "0.0")
+                On Error Resume Next
+                ws.Cells(rStart, "A").AddComment "親が最長でない：本来 " & rMax & " 行（" & Format(maxDur, "0") & "日）"
+                On Error GoTo 0
+            Else
+                DbgWrite "OK", "A=" & aVal, "TopRow=" & rStart, "Dur=" & Format(maxDur, "0.0")
+            End If
+
+            r = rEnd + 1
+        Else
+            r = r + 1
+        End If
+    Loop
+    Application.ScreenUpdating = True
+
+    DbgWrite "SCAN_END"
+End Sub
+
+'----------------- Resort内部で呼ぶトレース -----------------
+Public Sub Debug_TraceBlock(ByVal ws As Worksheet, ByVal rStart As Long, ByVal rEnd As Long, ByVal phase As String)
+    If Not gDBG Then Exit Sub
+    EnsureDbgSheet
+
+    Dim aVal As String
+    aVal = CStr(ws.Cells(rStart, "A").Value)
+    DbgWrite "BLOCK", phase, ws.Name, "A=" & aVal, "Rows=" & rStart & "-" & rEnd
+
+    Dim r As Long
+    For r = rStart To rEnd
+        Dim sOk As Boolean, eOk As Boolean
+        Dim sD As Date, eD As Date
+        Dim dur As Double
+        dur = RowDurationDays(ws, r, sOk, eOk, sD, eD)
+
+        DbgWrite " r=" & r, _
+                 "B=" & Left$(CStr(ws.Cells(r, "B").Value), 30), _
+                 "D.txt=" & ws.Cells(r, "D").Text, _
+                 "E.txt=" & ws.Cells(r, "E").Text, _
+                 "D.v2=" & V2(ws.Cells(r, "D").Value2) & "/E.v2=" & V2(ws.Cells(r, "E").Value2), _
+                 "IsDate(D/E)=" & IIf(sOk, "T", "F") & "/" & IIf(eOk, "T", "F"), _
+                 "Dur=" & Format(dur, "0.0")
+    Next r
+End Sub
+
+Public Sub Debug_TraceChosen(ByVal ws As Worksheet, ByVal rStart As Long, ByVal rEnd As Long, ByVal rMax As Long, ByVal maxDur As Double, ByVal phase As String)
+    If Not gDBG Then Exit Sub
+    EnsureDbgSheet
+    DbgWrite "CHOSEN", phase, ws.Name, _
+             "Block=" & rStart & "-" & rEnd, _
+             "TopRow=" & rStart, _
+             "ParentRow=" & rMax, _
+             "MaxDur=" & Format(maxDur, "0.0")
+End Sub
+
+Public Sub Debug_LogEvent(ByVal where As String, ByVal action As String, Optional ByVal info As String = "")
+    If Not gDBG Then Exit Sub
+    EnsureDbgSheet
+    DbgWrite "EVT", where, action, info
+End Sub
+
+Public Sub Debug_LogEnter(ByVal proc As String, Optional ByVal info As String = "")
+    If Not gDBG Then Exit Sub
+    EnsureDbgSheet
+    DbgWrite "ENTER", proc, info
+End Sub
+
+'----------------- 計算系 -----------------
+Public Function RowDurationDays(ByVal ws As Worksheet, ByVal r As Long, _
+                                ByRef sOk As Boolean, ByRef eOk As Boolean, _
+                                ByRef sD As Date, ByRef eD As Date) As Double
+    Dim vS As Variant, vE As Variant
+    vS = ws.Cells(r, "D").Value
+    vE = ws.Cells(r, "E").Value
+    sOk = IsDate(vS): If sOk Then sD = CDate(vS)
+    eOk = IsDate(vE): If eOk Then eD = CDate(vE)
+
+    Dim d As Double
+    If sOk And eOk Then
+        d = CDbl(eD) - CDbl(sD)
+        If d < 0 Then d = 0         ' 負は0扱い
+    ElseIf sOk Or eOk Then
+        d = 0                        ' 片方欠けは0扱い
+    Else
+        d = 0
+    End If
+    RowDurationDays = d
+End Function
+
+Public Function FindLongestRow(ByVal ws As Worksheet, ByVal rStart As Long, ByVal rEnd As Long, ByRef maxDur As Double) As Long
+    Dim r As Long, rMax As Long
+    Dim sOk As Boolean, eOk As Boolean, sD As Date, eD As Date
+    Dim dur As Double
+    rMax = rStart: maxDur = -1
+
+    For r = rStart To rEnd
+        dur = RowDurationDays(ws, r, sOk, eOk, sD, eD)
+
+        ' タイブレーク：開始が早い→終了が早い
+        Dim curS As Double: curS = IIf(sOk, CDbl(sD), 0#)
+        Dim curE As Double: curE = IIf(eOk, CDbl(eD), 0#)
+        Dim maxS As Double: maxS = IIf(IsDate(ws.Cells(rMax, "D").Value), CDbl(CDate(ws.Cells(rMax, "D").Value)), 0#)
+        Dim maxE As Double: maxE = IIf(IsDate(ws.Cells(rMax, "E").Value), CDbl(CDate(ws.Cells(rMax, "E").Value)), 0#)
+
+        If dur > maxDur _
+           Or (dur = maxDur And curS < maxS) _
+           Or (dur = maxDur And curS = maxS And curE < maxE) Then
+            maxDur = dur
+            rMax = r
+        End If
+    Next r
+    FindLongestRow = rMax
+End Function
+
+'----------------- 内部ユーティリティ -----------------
+Private Sub EnsureDbgSheet()
+    Dim sh As Worksheet
+    On Error Resume Next
+    Set sh = ThisWorkbook.Worksheets(DBG_SHEET)
+    On Error GoTo 0
+    If sh Is Nothing Then
+        Set sh = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count))
+        sh.Name = DBG_SHEET
+    End If
+    sh.Visible = xlSheetVisible
+End Sub
+
+' 何でもセルに書ける安全な DbgWrite
+Private Sub DbgWrite(ParamArray items() As Variant)
+    If Not gDBG Then Exit Sub
+
+    ' 念のため毎回シートを確保
+    EnsureDbgSheet
+    Dim sh As Worksheet
+    Set sh = ThisWorkbook.Worksheets(DBG_SHEET)
+
+    Dim r As Long
+    r = sh.Cells(sh.Rows.Count, 1).End(xlUp).Row + 1
+    If r < 2 Then r = 2   ' ヘッダ行を空ける想定
+
+    Dim i As Long
+    sh.Cells(r, 1).Value2 = Now
+
+    For i = LBound(items) To UBound(items)
+        Dim s As String
+        s = SafeStr(items(i))             ' ← 安全変換
+        If Len(s) > 32766 Then            ' ← セル文字数上限対策
+            s = Left$(s, 32766)
+        End If
+
+        On Error Resume Next
+        sh.Cells(r, i + 2).Value2 = s     ' ← Value2 で「評価」を避ける
+        If Err.Number <> 0 Then
+            ' もし書き込みに失敗したら、末尾列に理由を残して継続
+            sh.Cells(r, sh.Columns.Count).Value2 = _
+                "DBGWriteErr[" & i & "] " & Err.Number & ": " & Err.Description
+            Err.Clear
+        End If
+        On Error GoTo 0
+    Next i
+End Sub
+
+' 値を“安全な文字列”に変換（Error / 配列 / オブジェクト / Null すべて吸収）
+Private Function SafeStr(ByVal v As Variant) As String
+    On Error GoTo EH
+
+    If IsEmpty(v) Then SafeStr = "": Exit Function
+    If IsNull(v) Then SafeStr = "<Null>": Exit Function
+    If IsError(v) Then SafeStr = "<Error>": Exit Function
+
+    If IsObject(v) Then
+        ' Range などが来ても落ちないように
+        SafeStr = "<Obj:" & TypeName(v) & ">"
+        Exit Function
+    End If
+
+    If IsArray(v) Then
+        Dim lb As Long, ub As Long, i As Long
+        lb = LBound(v): ub = UBound(v)
+        Dim parts() As String
+        ReDim parts(lb To ub)
+        For i = lb To ub
+            parts(i) = SafeStr(v(i))
+        Next i
+        SafeStr = "{" & Join(parts, ",") & "}"
+        Exit Function
+    End If
+
+    SafeStr = CStr(v)
+    Exit Function
+
+EH:
+    SafeStr = "<ConvErr:" & Err.Number & ">"
+End Function
+
+
+Private Function V2(ByVal v As Variant) As String
+    On Error GoTo EH
+    If IsEmpty(v) Then V2 = "": Exit Function
+    If IsError(v) Then V2 = "#ERR": Exit Function
+    V2 = CStr(v)
+    Exit Function
+EH:
+    V2 = "#ERR"
+End Function
+
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+
+
+modJapanHolidays_042　標準モジュール
+
+'=== modJapanHolidays_042 ===
+Option Explicit
+
+' 祝日シート（A列=日付、B列=名称）を見て、その日が祝日なら True を返す
+' ※ ws は基準シート（ActiveSheet でOK）。同じブック内の「祝日」シートを参照します。
+Public Function IsHolidayJP_042(ByVal ws As Worksheet, ByVal d As Date, ByRef nameOut As String) As Boolean
+    Dim sh As Worksheet
+    On Error Resume Next
+    Set sh = ws.Parent.Worksheets("祝日")
+    On Error GoTo 0
+    If sh Is Nothing Then Exit Function ' 祝日シートが無ければ False（＝従来どおり土日だけ色）
+
+    ' 時刻を切り捨てて一致判定（Excel内部は日付=連続小数）
+    Dim key As Double: key = CDbl(DateSerial(Year(d), Month(d), Day(d)))
+    Dim m As Variant
+    m = Application.Match(key, sh.Columns(1), 0) ' A列に一致日付があれば行番号
+    If IsError(m) Then
+        IsHolidayJP_042 = False
+    Else
+        nameOut = CStr(sh.Cells(CLng(m), 2).Value) ' B列=祝日名
+        IsHolidayJP_042 = True
+    End If
+End Function
+
+'（任意）内閣府の「国民の祝日」CSVを読み込んで「祝日」シートを作る
+' 使い方：ImportCabinetHolidaysCsv_042 "C:\path\syukujitsu.csv"
+Public Sub ImportCabinetHolidaysCsv_042(ByVal csvPath As String)
+    Dim sh As Worksheet
+    On Error Resume Next
+    Set sh = ThisWorkbook.Worksheets("祝日")
+    On Error GoTo 0
+    If sh Is Nothing Then
+        Set sh = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count))
+        sh.Name = "祝日"
+    End If
+
+    sh.Cells.Clear
+    sh.Range("A1").Value = "日付"
+    sh.Range("B1").Value = "名称"
+
+    Dim f As Integer, line As String, arr As Variant, r As Long
+    f = FreeFile
+    Open csvPath For Input As #f
+    r = 1
+    Do While Not EOF(f)
+        Line Input #f, line
+        ' 1行目のヘッダ（"日付","名称" 等）はスキップ
+        If InStr(line, "日付") > 0 And InStr(line, "名称") > 0 Then
+            ' skip
+        Else
+            arr = Split(line, ",")
+            If UBound(arr) >= 1 Then
+                r = r + 1
+                On Error Resume Next
+                sh.Cells(r, 1).Value = CDate(Replace(arr(0), """", ""))
+                sh.Cells(r, 1).NumberFormatLocal = "yyyy/m/d"
+                sh.Cells(r, 2).Value = Replace(arr(1), """", "")
+                On Error GoTo 0
+            End If
+        End If
+    Loop
+    Close #f
+
+    ' 日付昇順に整列（重複は手元のCSVに従う）
+    If r > 1 Then
+        With sh.Sort
+            .SortFields.Clear
+            .SortFields.Add key:=sh.Range(sh.Cells(2, 1), sh.Cells(r, 1)), _
+                            SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
+            .SetRange sh.Range(sh.Cells(1, 1), sh.Cells(r, 2))
+            .Header = xlYes
+            .Apply
+        End With
+    End If
+
+    ' 見えないシートにしておく（必要なら xlSheetVisible に）
+    sh.Visible = xlSheetHidden
 End Sub
 
 
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 
 
-modRowColorsFix　　　標準モジュール
+標準モジュール　　modRowColorsFix
+
 
 
 Option Explicit
@@ -1281,28 +1662,28 @@ If lastRow < firstRow Then Exit Sub
     catCol(9) = RGB(255, 215, 0)      ' 9 黄
 catCol(10) = RGB(150, 75, 0)      ' 10 ★茶色 (#964B00)
 
-    Dim R As Long, curA As Variant, prevA As Variant
+    Dim r As Long, curA As Variant, prevA As Variant
     Dim isParent As Boolean, baseColor As Long, paintColor As Long
 
     prevA = Empty
     Application.ScreenUpdating = False
 
-    For R = firstRow To lastRow
-        curA = ws.Cells(R, "A").Value
+    For r = firstRow To lastRow
+        curA = ws.Cells(r, "A").Value
         If IsNumeric(curA) And curA >= 1 And curA <= MAX_CAT Then
             ' 親=ブロック先頭, 子=2行目以降
             isParent = Not (IsNumeric(prevA) And CLng(prevA) = CLng(curA))
             baseColor = catCol(CLng(curA))
             paintColor = IIf(isParent, baseColor, LightenColor_016(baseColor, CHILD_LIGHTEN))
-            With ws.Range(ws.Cells(R, "B"), ws.Cells(R, "D")).Interior
+            With ws.Range(ws.Cells(r, "B"), ws.Cells(r, "D")).Interior
                 .Pattern = xlSolid
                 .Color = paintColor
             End With
         Else
-            ws.Range(ws.Cells(R, "B"), ws.Cells(R, "D")).Interior.Pattern = xlNone
+            ws.Range(ws.Cells(r, "B"), ws.Cells(r, "D")).Interior.Pattern = xlNone
         End If
         prevA = curA
-    Next R
+    Next r
 
     Application.ScreenUpdating = True
 End Sub
@@ -1311,22 +1692,102 @@ End Sub
 Private Function LightenColor_016(ByVal c As Long, ByVal p As Double) As Long
     If p < 0 Then p = 0
     If p > 1 Then p = 1
-    Dim R As Long, G As Long, B As Long
-    R = (c And &HFF)
+    Dim r As Long, G As Long, B As Long
+    r = (c And &HFF)
     G = (c \ &H100) And &HFF
     B = (c \ &H10000) And &HFF
-    R = R + CLng((255 - R) * p)
+    r = r + CLng((255 - r) * p)
     G = G + CLng((255 - G) * p)
     B = B + CLng((255 - B) * p)
-    LightenColor_016 = RGB(R, G, B)
+    LightenColor_016 = RGB(r, G, B)
+End Function
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+
+標準モジュール　　modRowColorsFix1
+
+
+
+Option Explicit
+
+Public Sub ApplyPriorityColors_AllRows_016(ByVal ws As Worksheet)
+    If ws Is Nothing Then Set ws = ActiveSheet
+
+    Const MAX_CAT As Long = 10
+    Const CHILD_LIGHTEN As Double = 0.35     ' ← 子の薄さ（0.0～1.0）
+
+Dim firstRow As Long: firstRow = DATA_START_ROW_015
+Dim lastRow  As Long
+lastRow = Application.Max( _
+             ws.Cells(ws.Rows.Count, "A").End(xlUp).Row, _
+             ws.Cells(ws.Rows.Count, "B").End(xlUp).Row, _
+             ws.Cells(ws.Rows.Count, "C").End(xlUp).Row, _
+             ws.Cells(ws.Rows.Count, "D").End(xlUp).Row, _
+             ws.Cells(ws.Rows.Count, "E").End(xlUp).Row, _
+             firstRow)
+If lastRow < firstRow Then Exit Sub
+
+
+    ' ===== 指定パレット =====
+    ' 1=赤, 2=ライトブルー, 3=オレンジ, 4=緑, 5=ピンク,
+    ' 6=紫, 7=紺, 8=黄緑, 9=黄, 10=薄い灰
+    Dim catCol(1 To MAX_CAT) As Long
+    catCol(1) = RGB(220, 53, 69)      ' 1 赤
+    catCol(2) = RGB(0, 153, 204)      ' 2 ライトブルー
+    catCol(3) = RGB(255, 165, 0)      ' 3 オレンジ
+    catCol(4) = RGB(76, 175, 80)      ' 4 緑
+    catCol(5) = RGB(255, 99, 132)     ' 5 ピンク
+    catCol(6) = RGB(102, 0, 153)      ' 6 紫
+    catCol(7) = RGB(0, 51, 102)       ' 7 紺
+    catCol(8) = RGB(146, 208, 80)     ' 8 黄緑
+    catCol(9) = RGB(255, 215, 0)      ' 9 黄
+catCol(10) = RGB(150, 75, 0)      ' 10 ★茶色 (#964B00)
+
+    Dim r As Long, curA As Variant, prevA As Variant
+    Dim isParent As Boolean, baseColor As Long, paintColor As Long
+
+    prevA = Empty
+    Application.ScreenUpdating = False
+
+    For r = firstRow To lastRow
+        curA = ws.Cells(r, "A").Value
+        If IsNumeric(curA) And curA >= 1 And curA <= MAX_CAT Then
+            ' 親=ブロック先頭, 子=2行目以降
+            isParent = Not (IsNumeric(prevA) And CLng(prevA) = CLng(curA))
+            baseColor = catCol(CLng(curA))
+            paintColor = IIf(isParent, baseColor, LightenColor_016(baseColor, CHILD_LIGHTEN))
+            With ws.Range(ws.Cells(r, "B"), ws.Cells(r, "D")).Interior
+                .Pattern = xlSolid
+                .Color = paintColor
+            End With
+        Else
+            ws.Range(ws.Cells(r, "B"), ws.Cells(r, "D")).Interior.Pattern = xlNone
+        End If
+        prevA = curA
+    Next r
+
+    Application.ScreenUpdating = True
+End Sub
+
+' 色を明るく（0.0～1.0で白に近づける）
+Private Function LightenColor_016(ByVal c As Long, ByVal p As Double) As Long
+    If p < 0 Then p = 0
+    If p > 1 Then p = 1
+    Dim r As Long, G As Long, B As Long
+    r = (c And &HFF)
+    G = (c \ &H100) And &HFF
+    B = (c \ &H10000) And &HFF
+    r = r + CLng((255 - r) * p)
+    G = G + CLng((255 - G) * p)
+    B = B + CLng((255 - B) * p)
+    LightenColor_016 = RGB(r, G, B)
 End Function
 
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-
-modSeparators　　　標準モジュール
+標準モジュールmodSeparators
 
 
 '=== 分類の境目に二重線（横方向にB～カレンダー末尾まで） ===
@@ -1358,29 +1819,24 @@ lastRow = Application.Max( _
         .Borders(xlEdgeTop).LineStyle = xlDouble
 
     ' 分類が変わる行に二重線
-    Dim R As Long, aPrev As Variant, aNow As Variant
+    Dim r As Long, aPrev As Variant, aNow As Variant
     aPrev = ws.Cells(dataStartRow, "A").Value
-    For R = dataStartRow + 1 To lastRow
-        aNow = ws.Cells(R, "A").Value
+    For r = dataStartRow + 1 To lastRow
+        aNow = ws.Cells(r, "A").Value
         If CStr(aNow) <> CStr(aPrev) Then
-            With ws.Range(ws.Cells(R, 2), ws.Cells(R, lastCalCol)).Borders(xlEdgeTop)
+            With ws.Range(ws.Cells(r, 2), ws.Cells(r, lastCalCol)).Borders(xlEdgeTop)
                 .LineStyle = xlDouble
                 .weight = xlThick
                 .Color = vbBlack
             End With
         End If
         aPrev = aNow
-    Next R
+    Next r
 End Sub
 
 
-
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-
-
-Module1　　標準モジュール
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+標準モジュールModule1
 
 Option Explicit
 
@@ -1394,183 +1850,206 @@ Public Sub FormEscHook()
     If frmCalendarRange.Visible Then frmCalendarRange.DoCancel
 End Sub
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-
-
-Sheet1　　シートモジュール
-
+シート
 Option Explicit
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     On Error GoTo ExitHandler
-    If Target Is Nothing Then Exit Sub
+    If Target Is Nothing Then GoTo ExitHandler
 
-    Dim hit As Range
-
-'===== A列：分類番号を変更したとき（手入力/貼り付けの両方） =====
-Set hit = Intersect(Target, Me.Columns("A"))
-If Not hit Is Nothing Then
+    Dim needResort As Boolean
+    Dim hit As Range, c As Range
+    Dim ev As Boolean: ev = Application.EnableEvents
     Application.EnableEvents = False
-    Dim a As Range, v As Variant
-    Dim needResortOnEmptyA As Boolean    ' ★追加：Aが空になったら並び替えを走らせるフラグ
 
-    For Each a In hit.Cells
-        If a.Row >= DATA_START_ROW_015 Then
-            v = Trim$(a.Value & "")
-            Select Case True
-                Case Len(v) = 0
-                    ' 空になった行は見た目を初期化（行色など）
-                    WipeRowColors_016 Me, a.Row
-                    RemoveChildrenIfParentCleared_016 Me, a.Row
-                    needResortOnEmptyA = True          ' ★削除があったので後で全体ソート
+    '========================
+    ' A列：分類番号の変更
+    '========================
+    Set hit = Intersect(Target, Me.Columns("A"))
+    If Not hit Is Nothing Then
+        For Each c In hit.Cells
+            If c.Row >= DATA_START_ROW_015 Then
+                Dim v As String: v = Trim$(CStr(c.Value))
+                Select Case True
+                    Case Len(v) = 0
+                        ' A を空にした：行見た目リセット＋子ブロック解除
+                        WipeRowColors_016 Me, c.Row
+                        RemoveChildrenIfParentCleared_016 Me, c.Row
+                        needResort = True
 
-                Case IsNumeric(v) And CLng(v) >= 1
-                    ' Aを確定 → A→Dの二段ソート（従来どおり）
-                    Me.Cells(a.Row, "A").Value = CLng(v)
-                    ResortByCategory_031 Me
+                    Case IsNumeric(v) And CLng(v) >= 1
+                        ' 値を確定（整数化）。ここではソートしない（最後に一括）
+                        c.Value = CLng(v)
+                        c.NumberFormat = "0"
+                        needResort = True
 
-                Case Else
-                    a.ClearContents: Beep
-            End Select
-        End If
-    Next a
+                    Case Else
+                        c.ClearContents: Beep
+                End Select
+            End If
+        Next c
 
-    ' ★追加：Aが空になった行が1つでもあれば、全体の既定順で再ソート
-    If needResortOnEmptyA Then
-        ResortAllByCategory_032 Me        ' 例：A→D→E のキー順
+        ' 任意：A列に小数等が残っているブック対策（存在しない環境でもエラーにならない）
+        On Error Resume Next
+        NormalizePriorityColumn_031 Me
+        On Error GoTo 0
     End If
 
-    ' ★追加：行色（B～D）を先に再塗装
-'modRowColorsFix.ApplyPriorityColors_AllRows_016 Me
-
-
-    ' ★順番重要：帯（期間）の条件付き書式を次に再構築
-    SetupPeriodConditionalFormatting_020
-' ★追加：今日より前の列をグレー化
-GreyOutPastDateColumns_041 Me, CAL_DATE_ROW_015
-
-    ' ★最後に分類の区切り線（二重線）
-    ApplyCategoryDividers_020 Me
-
-    Application.EnableEvents = True
-End If
-
-
-'===== B列：イベント名が空なら行ワイプ（A/C/色/帯）＋ 並び替え＋ 区切り線/CF再生成 =====
-Set hit = Intersect(Target, Me.Columns("B"))
-If Not hit Is Nothing Then
-    Application.EnableEvents = False
-    Dim rB As Range
-    For Each rB In hit.Cells
-        If rB.Row >= DATA_START_ROW_015 Then
-            If Len(Trim$(rB.Value & "")) = 0 Then
-                WipeRowOnEmptyB_016 Me, rB.Row
+    '========================
+    ' B列：内容が空になったら行ごと初期化
+    '========================
+    Set hit = Intersect(Target, Me.Columns("B"))
+    If Not hit Is Nothing Then
+        For Each c In hit.Cells
+            If c.Row >= DATA_START_ROW_015 Then
+                If Len(Trim$(c.Value & "")) = 0 Then
+                    WipeRowOnEmptyB_016 Me, c.Row
+                    needResort = True
+                End If
             End If
-        End If
-    Next rB
+        Next c
+    End If
 
-    ' 並び替え
-    ResortAllByCategory_032 Me
+    '========================
+    ' D列：開始日を編集
+    '   - 日付化
+    '   - E が空なら補完
+    '   - D > E なら入れ替え
+    '========================
+    Set hit = Intersect(Target, Me.Columns("D"))
+    If Not hit Is Nothing Then
+        For Each c In hit.Cells
+            If c.Row >= DATA_START_ROW_015 Then
+                Call ForceCellToDate(Me, c.Row, "D")                 ' D を日付化
+                If Not IsDate(Me.Cells(c.Row, "E").Value) And IsDate(Me.Cells(c.Row, "D").Value) Then
+                    Me.Cells(c.Row, "E").Value = Me.Cells(c.Row, "D").Value
+                    Me.Cells(c.Row, "E").NumberFormatLocal = DATE_FMT_015
+                End If
+                Call EnsureStartLeEnd(Me, c.Row)                      ' D<=E に揃える
+                needResort = True
+            End If
+        Next c
+    End If
 
-    ' ★追加：行色（B～D）を再塗装
-'modRowColorsFix.ApplyPriorityColors_AllRows_016 Me
+    '========================
+    ' E列：終了日を編集
+    '   - 日付化
+    '   - D が空なら補完
+    '   - D > E なら入れ替え
+    '========================
+    Set hit = Intersect(Target, Me.Columns("E"))
+    If Not hit Is Nothing Then
+        For Each c In hit.Cells
+            If c.Row >= DATA_START_ROW_015 Then
+                Call ForceCellToDate(Me, c.Row, "E")                 ' E を日付化
+                If Not IsDate(Me.Cells(c.Row, "D").Value) And IsDate(Me.Cells(c.Row, "E").Value) Then
+                    Me.Cells(c.Row, "D").Value = Me.Cells(c.Row, "E").Value
+                    Me.Cells(c.Row, "D").NumberFormatLocal = DATE_FMT_015
+                End If
+                Call EnsureStartLeEnd(Me, c.Row)                      ' D<=E に揃える
+                needResort = True
+            End If
+        Next c
+    End If
 
-    ' ★順番重要：帯CF → 区切り線
-    SetupPeriodConditionalFormatting_020
-    ' ★追加：今日より前の列をグレー化
-GreyOutPastDateColumns_041 Me, CAL_DATE_ROW_015
+    '========================
+    ' まとめて仕上げ（1回だけ）
+    '========================
+    If needResort Then
+        ' 親昇格込みの既定ソート（A→D→E → 各Aブロック最長を親へ）
+        ResortAllByCategory_032 Me
 
-    ApplyCategoryDividers_020 Me
-
-    Application.EnableEvents = True
-End If
-
-
-'===== D列：開始日編集（年補完＆正規化）→ 並び替え＋行色→帯CF→区切り線 =====
-Set hit = Intersect(Target, Me.Columns("D"))
-If Not hit Is Nothing Then
-    Application.EnableEvents = False
-    Dim c As Range, s As String
-    For Each c In hit.Cells
-        If c.Row >= DATA_START_ROW_015 Then
-            s = NormalizeDateRangeWithYearFromCalendar_015(CStr(c.Value), Me, CAL_START_COL_015, CAL_DATE_ROW_015)
-            If Len(s) > 0 Then c.Value = s
-        End If
-    Next c
-
-    ' 並び替え
-    ResortAllByCategory_032 Me
-
-    ' ★追加：行色（B～D）を再塗装
-'modRowColorsFix.ApplyPriorityColors_AllRows_016 Me
-
-
-    ' ★順番重要：帯CF → 区切り線
-    SetupPeriodConditionalFormatting_020
-    ' ★追加：今日より前の列をグレー化
-GreyOutPastDateColumns_041 Me, CAL_DATE_ROW_015
-
-    ApplyCategoryDividers_020 Me
-
-    Application.EnableEvents = True
-End If
-
-'===== E列：終了日編集 → 並び替え＋行色→帯CF→区切り線 =====
-Set hit = Intersect(Target, Me.Columns("E"))
-If Not hit Is Nothing Then
-    Application.EnableEvents = False
-
-    ' 並び替え
-    ResortAllByCategory_032 Me
-
-    ' ★追加：行色（B～D）を再塗装
-'modRowColorsFix.ApplyPriorityColors_AllRows_016 Me
-
-
-    ' ★順番重要：帯CF → 区切り線
-    SetupPeriodConditionalFormatting_020
-    ' ★追加：今日より前の列をグレー化
-GreyOutPastDateColumns_041 Me, CAL_DATE_ROW_015
-
-    ApplyCategoryDividers_020 Me
-
-    Application.EnableEvents = True
-End If
-
+        ' 見た目：帯CF・過去列グレー・区切り線
+        SetupPeriodConditionalFormatting_020
+        GreyOutPastDateColumns_041 Me, CAL_DATE_ROW_015
+        ApplyCategoryDividers_020 Me
+    End If
 
 ExitHandler:
-    Application.EnableEvents = True
+    Application.EnableEvents = ev
 End Sub
 
 
+'--------------------------------------------
+' 選択移動時：B4 に「選択月」を表示（既存どおり）
+'--------------------------------------------
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     On Error GoTo ExitHandler
-
-    ' カレンダーの列（E列～最終カレンダー列）上で選択が動いたときだけ更新
     Dim firstCol As Long: firstCol = CAL_START_COL_015        ' 5 = E列
     Dim lastCol  As Long: lastCol = Me.Cells(CAL_DATE_ROW_015, Me.Columns.Count).End(xlToLeft).Column
 
     If Intersect(Target, Me.Range(Me.Cells(1, firstCol), Me.Cells(Me.Rows.Count, lastCol))) Is Nothing Then
-        Exit Sub
+        GoTo ExitHandler
     End If
 
     Application.EnableEvents = False
-    UpdateMonthIndicator_B4_015 Me, CAL_START_COL_015         ' B4 を yyyy年m月 に更新
+    UpdateMonthIndicator_B4_015 Me, CAL_START_COL_015
+
 ExitHandler:
     Application.EnableEvents = True
 End Sub
 
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
+'--------------------------------------------
+' （必要なら）C列のハイパーリンク対応（あなたの既存どおり）
+'--------------------------------------------
+Private Sub Worksheet_FollowHyperlink(ByVal Target As Hyperlink)
+    On Error GoTo EH
+    If Not Target Is Nothing Then
+        If Target.Range.Column = 3 And Target.Range.Row >= DATA_START_ROW_015 Then
+            Dim tip As String: tip = Target.ScreenTip
+            Dim eid As String: eid = ParseTagValue_OL(tip, "EID")
+            Dim sid As String: sid = ParseTagValue_OL(tip, "SID")
+            If LenB(eid) > 0 Then OpenOutlookMailByID eid, sid
+        End If
+    End If
+    Exit Sub
+EH:
+    MsgBox "メールを開けませんでした: " & Err.Description, vbExclamation
+End Sub
 
+'======================== ヘルパー（このシートだけで完結） ========================
 
-ThisWorkbook　　　
+' D/E セルを「文字列でも受けて必ず日付化」する
+Private Sub ForceCellToDate(ByVal ws As Worksheet, ByVal rowIndex As Long, ByVal colLetter As String)
+    Dim v As Variant, dt As Date
+    v = ws.Cells(rowIndex, colLetter).Value
 
+    If IsDate(v) Then
+        ws.Cells(rowIndex, colLetter).Value = CDate(v)
+        ws.Cells(rowIndex, colLetter).NumberFormatLocal = DATE_FMT_015
+        Exit Sub
+    End If
 
+    ' 文字列でも ParseDateLooseJP_015 が使える（表.bas で Public）
+    If ParseDateLooseJP_015(CStr(v), dt) Then
+        ws.Cells(rowIndex, colLetter).Value = dt
+        ws.Cells(rowIndex, colLetter).NumberFormatLocal = DATE_FMT_015
+    Else
+        ' どうしても日付にならない場合は空にしておく（ソートの不整合を避ける）
+        ws.Cells(rowIndex, colLetter).ClearContents
+    End If
+End Sub
 
+' D/E を持っていれば D<=E になるように揃える（双方日付のときだけ）
+Private Sub EnsureStartLeEnd(ByVal ws As Worksheet, ByVal rowIndex As Long)
+    If IsDate(ws.Cells(rowIndex, "D").Value) And IsDate(ws.Cells(rowIndex, "E").Value) Then
+        If CDate(ws.Cells(rowIndex, "E").Value) < CDate(ws.Cells(rowIndex, "D").Value) Then
+            Dim T As Variant
+            T = ws.Cells(rowIndex, "D").Value
+            ws.Cells(rowIndex, "D").Value = ws.Cells(rowIndex, "E").Value
+            ws.Cells(rowIndex, "E").Value = T
+            ws.Cells(rowIndex, "D").NumberFormatLocal = DATE_FMT_015
+            ws.Cells(rowIndex, "E").NumberFormatLocal = DATE_FMT_015
+        End If
+    End If
+End Sub
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+ThisWorkbook
 
 Option Explicit
 
@@ -1612,12 +2091,11 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
 End Sub
 
 
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 
-ジャンプ　　標準モジュール
+
+ジャンプ　標準モジュール
 
 Option Explicit
 
@@ -1672,13 +2150,9 @@ Public Sub 連続入力モード_起動()
     On Error GoTo 0
 End Sub
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-
-表　　標準モジュール
+標準モジュール
 
 Option Explicit
 
@@ -1693,12 +2167,12 @@ Public Const DATE_FMT_015      As String = "yyyy年m月d日" ' C/Dの日付表�
 Public Const CAT_SELECTED_ADDR_017 As String = "B2"   ' 分類番号を読むセル（必要なら "E2" などに変更）
 ' 帯用：色を明るく（0.0～1.0で白に近づける）
 Private Function Lighten_020(ByVal c As Long, ByVal p As Double) As Long
-    Dim R As Long, G As Long, B As Long
-    R = (c And &HFF): G = (c \ &H100) And &HFF: B = (c \ &H10000) And &HFF
-    R = R + CLng((255 - R) * p)
+    Dim r As Long, G As Long, B As Long
+    r = (c And &HFF): G = (c \ &H100) And &HFF: B = (c \ &H10000) And &HFF
+    r = r + CLng((255 - r) * p)
     G = G + CLng((255 - G) * p)
     B = B + CLng((255 - B) * p)
-    Lighten_020 = RGB(R, G, B)
+    Lighten_020 = RGB(r, G, B)
 End Function
 
 
@@ -1786,7 +2260,7 @@ Private Sub CreateTopbarLikeButton_015( _
     Set sh = ws.Shapes.AddShape(msoShapeRoundedRectangle, rng.Left + m, rng.Top + m, W, H)
 
     With sh
-        .name = shapeName
+        .Name = shapeName
         .Placement = xlMoveAndSize
         .LockAspectRatio = msoFalse
         .FILL.ForeColor.RGB = fillColor
@@ -1963,36 +2437,36 @@ Public Sub NormalizeAllCD_015(ByVal ws As Worksheet)
     lastRowE = ws.Cells(ws.Rows.Count, "E").End(xlUp).Row
     lastRow = Application.Max(lastRowD, lastRowE, DATA_START_ROW_015)
 
-    Dim R As Long
-    For R = DATA_START_ROW_015 To lastRow
+    Dim r As Long
+    For r = DATA_START_ROW_015 To lastRow
         ' 旧データ救済：C が日付/期間 かつ D/E が空なら D/E に移し、C は空にする
-        NormalizeOrSplit_C_to_CD_015 ws, R   ' ←中身も D/E 版に直します（次項）
+        NormalizeOrSplit_C_to_CD_015 ws, r   ' ←中身も D/E 版に直します（次項）
 
         ' D/E を日付セルとして正規化
         Dim dStart As Date, dEnd As Date
         Dim hasD As Boolean, hasE As Boolean
-        hasD = TryReadDateFromCell_015(ws, R, "D", dStart)
-        hasE = TryReadDateFromCell_015(ws, R, "E", dEnd)
+        hasD = TryReadDateFromCell_015(ws, r, "D", dStart)
+        hasE = TryReadDateFromCell_015(ws, r, "E", dEnd)
 
         If hasD And Not hasE Then
-            ws.Cells(R, "E").Value = dStart
-            ws.Cells(R, "E").NumberFormatLocal = DATE_FMT_015
+            ws.Cells(r, "E").Value = dStart
+            ws.Cells(r, "E").NumberFormatLocal = DATE_FMT_015
         ElseIf hasE And Not hasD Then
-            ws.Cells(R, "D").Value = dEnd
-            ws.Cells(R, "D").NumberFormatLocal = DATE_FMT_015
+            ws.Cells(r, "D").Value = dEnd
+            ws.Cells(r, "D").NumberFormatLocal = DATE_FMT_015
         End If
 
-        If IsDate(ws.Cells(R, "D").Value) And IsDate(ws.Cells(R, "E").Value) Then
-            If CDate(ws.Cells(R, "E").Value) < CDate(ws.Cells(R, "D").Value) Then
+        If IsDate(ws.Cells(r, "D").Value) And IsDate(ws.Cells(r, "E").Value) Then
+            If CDate(ws.Cells(r, "E").Value) < CDate(ws.Cells(r, "D").Value) Then
                 Dim T As Variant
-                T = ws.Cells(R, "D").Value
-                ws.Cells(R, "D").Value = ws.Cells(R, "E").Value
-                ws.Cells(R, "E").Value = T
-                ws.Cells(R, "D").NumberFormatLocal = DATE_FMT_015
-                ws.Cells(R, "E").NumberFormatLocal = DATE_FMT_015
+                T = ws.Cells(r, "D").Value
+                ws.Cells(r, "D").Value = ws.Cells(r, "E").Value
+                ws.Cells(r, "E").Value = T
+                ws.Cells(r, "D").NumberFormatLocal = DATE_FMT_015
+                ws.Cells(r, "E").NumberFormatLocal = DATE_FMT_015
             End If
         End If
-    Next R
+    Next r
 End Sub
 
 
@@ -2178,20 +2652,20 @@ Public Sub RemoveChildrenIfParentCleared_016(ByVal ws As Worksheet, ByVal parent
     End If
 
     Dim lastRow As Long: lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
-    Dim R As Long
+    Dim r As Long
     Application.EnableEvents = False
-    For R = parentRow + 1 To lastRow
-        If IsNumeric(ws.Cells(R, "A").Value) Then
-            If CLng(ws.Cells(R, "A").Value) = CLng(pNext) Then
-                ws.Cells(R, "A").ClearContents
-                WipeRowColors_016 ws, R
+    For r = parentRow + 1 To lastRow
+        If IsNumeric(ws.Cells(r, "A").Value) Then
+            If CLng(ws.Cells(r, "A").Value) = CLng(pNext) Then
+                ws.Cells(r, "A").ClearContents
+                WipeRowColors_016 ws, r
             Else
                 Exit For
             End If
         Else
             Exit For
         End If
-    Next R
+    Next r
     Application.EnableEvents = True
 End Sub
 
@@ -2246,10 +2720,10 @@ End Sub
 
 '=== データの最終行（B列基準） ===
 Public Function LastDataRow_016(ByVal ws As Worksheet) As Long
-    Dim R As Long
-    R = ws.Cells(ws.Rows.Count, "B").End(xlUp).Row
-    If R < DATA_START_ROW_015 Then R = DATA_START_ROW_015
-    LastDataRow_016 = R
+    Dim r As Long
+    r = ws.Cells(ws.Rows.Count, "B").End(xlUp).Row
+    If r < DATA_START_ROW_015 Then r = DATA_START_ROW_015
+    LastDataRow_016 = r
 End Function
 
 '=== カレンダーの最終列（4行目の右端） ===
@@ -2429,17 +2903,17 @@ Public Sub EnsureCategoryToRow_017(ByVal ws As Worksheet, ByVal rowIndex As Long
 End Sub
 '=== 次の書き込み行（C列ベース） ===
 Public Function NextFreeRowCD_017(ByVal ws As Worksheet) As Long
-    Dim R As Long
-    R = ws.Cells(ws.Rows.Count, "C").End(xlUp).Row
-    If R < DATA_START_ROW_015 Then
+    Dim r As Long
+    r = ws.Cells(ws.Rows.Count, "C").End(xlUp).Row
+    If r < DATA_START_ROW_015 Then
         NextFreeRowCD_017 = DATA_START_ROW_015
-    ElseIf Len(Trim$(CStr(ws.Cells(R, "C").Value))) = 0 And _
-           Len(Trim$(CStr(ws.Cells(R, "D").Value))) = 0 And _
-           Len(Trim$(CStr(ws.Cells(R, "B").Value))) = 0 And _
-           Len(Trim$(CStr(ws.Cells(R, "A").Value))) = 0 Then
-        NextFreeRowCD_017 = R
+    ElseIf Len(Trim$(CStr(ws.Cells(r, "C").Value))) = 0 And _
+           Len(Trim$(CStr(ws.Cells(r, "D").Value))) = 0 And _
+           Len(Trim$(CStr(ws.Cells(r, "B").Value))) = 0 And _
+           Len(Trim$(CStr(ws.Cells(r, "A").Value))) = 0 Then
+        NextFreeRowCD_017 = r
     Else
-        NextFreeRowCD_017 = R + 1
+        NextFreeRowCD_017 = r + 1
     End If
 End Function
 
@@ -2549,13 +3023,13 @@ inRangeCond = addrStart & "<>""" & """" & sep & _
     Dim catColor(1 To MAX_CAT) As Long
     Dim catHas(1 To MAX_CAT) As Boolean
 
-    Dim R As Long, k As Long
-    For R = dataStartRow To lastRow
-        If IsNumeric(ws.Cells(R, "A").Value) Then
-            k = CLng(ws.Cells(R, "A").Value)
+    Dim r As Long, k As Long
+    For r = dataStartRow To lastRow
+        If IsNumeric(ws.Cells(r, "A").Value) Then
+            k = CLng(ws.Cells(r, "A").Value)
             If k >= 1 And k <= MAX_CAT Then
                 If Not catHas(k) Then
-                    With ws.Cells(R, "B").Interior
+                    With ws.Cells(r, "B").Interior
                         If .Pattern <> xlNone Then
                             catColor(k) = .Color
                             catHas(k) = True
@@ -2564,7 +3038,7 @@ inRangeCond = addrStart & "<>""" & """" & sep & _
                 End If
             End If
         End If
-    Next R
+    Next r
 
     ' 既定色（VIVID 相当。BGR）
 ' 既定色（B列の塗りが無いカテゴリ用）
@@ -2687,21 +3161,21 @@ Public Sub ApplyCategoryDividers_020(ByVal ws As Worksheet)
     End With
 
     ' A列の番号が変わる行の「上」に二重線を入れる
-    Dim R As Long, prevCat As Variant, curCat As Variant
+    Dim r As Long, prevCat As Variant, curCat As Variant
     prevCat = ws.Cells(firstRow, "A").Value
 
-    For R = firstRow + 1 To lastRow
-        curCat = ws.Cells(R, "A").Value
+    For r = firstRow + 1 To lastRow
+        curCat = ws.Cells(r, "A").Value
         If IsNumeric(prevCat) And IsNumeric(curCat) Then
             If CLng(prevCat) <> CLng(curCat) Then
-                With ws.Range(ws.Cells(R, 1), ws.Cells(R, rightCol)).Borders(xlEdgeTop)
+                With ws.Range(ws.Cells(r, 1), ws.Cells(r, rightCol)).Borders(xlEdgeTop)
                     .LineStyle = xlDouble
                     .Color = vbBlack
                 End With
             End If
         End If
         prevCat = curCat
-    Next R
+    Next r
 
     Application.ScreenUpdating = True
 End Sub
@@ -2712,6 +3186,7 @@ End Sub
 
 
 
+'=== Aブロック内で「最長(E-D)」を親にし、子は D→E 昇順にする ===
 Public Sub ResortAllByCategory_032(ByVal ws As Worksheet)
     If ws Is Nothing Then Set ws = ActiveSheet
 
@@ -2727,7 +3202,37 @@ Public Sub ResortAllByCategory_032(ByVal ws As Worksheet)
     Application.EnableEvents = False
     Application.ScreenUpdating = False
 
-    ' 1) 子の並びを確定（A → D → E）
+    On Error GoTo CleanUp
+
+    '----------------------------------------------------
+    ' 0) 事前正規化：D/E を必ず「日付セル」にする（欠けは補完・大小逆は入替）
+    '----------------------------------------------------
+    Dim r As Long, dS As Date, dE As Date
+    Dim okS As Boolean, okE As Boolean
+    For r = firstRow To lastRow
+        okS = TryReadDateFromCell_015(ws, r, "D", dS)
+        okE = TryReadDateFromCell_015(ws, r, "E", dE)
+
+        If okS Xor okE Then
+            If okS Then
+                ws.Cells(r, "E").Value = dS
+                ws.Cells(r, "E").NumberFormatLocal = DATE_FMT_015
+            Else
+                ws.Cells(r, "D").Value = dE
+                ws.Cells(r, "D").NumberFormatLocal = DATE_FMT_015
+            End If
+        ElseIf okS And okE Then
+            If dE < dS Then
+                Dim T As Date: T = dS: dS = dE: dE = T
+                ws.Cells(r, "D").Value = dS: ws.Cells(r, "D").NumberFormatLocal = DATE_FMT_015
+                ws.Cells(r, "E").Value = dE: ws.Cells(r, "E").NumberFormatLocal = DATE_FMT_015
+            End If
+        End If
+    Next r
+
+    '----------------------------------------------------
+    ' 1) 子の基本並びを確定（A → D → E 昇順）
+    '----------------------------------------------------
     With ws.Sort
         .SortFields.Clear
         .SortFields.Add key:=ws.Range(ws.Cells(firstRow, "A"), ws.Cells(lastRow, "A")), _
@@ -2741,40 +3246,51 @@ Public Sub ResortAllByCategory_032(ByVal ws As Worksheet)
         .Apply
     End With
 
-    ' 2) 各Aブロックで「最長(E-D)」の行を親(先頭)へ昇格（インライン実装）
-    Dim R As Long: R = firstRow
-    Do While R <= lastRow
-        If IsNumeric(ws.Cells(R, "A").Value) Then
-            Dim rStart As Long: rStart = R
-            Dim rEnd   As Long: rEnd = R
-            ' 同じAが連続する最終行を探す
+    '----------------------------------------------------
+    ' 2) 各Aブロックで「最長(E-D)」の行を親(先頭)へ昇格
+    '    （同長は 開始が早い → 終了が早い を優先）
+    '----------------------------------------------------
+    r = firstRow
+    Do While r <= lastRow
+        If IsNumeric(ws.Cells(r, "A").Value) Then
+            Dim aVal As Long: aVal = CLng(ws.Cells(r, "A").Value)
+            Dim rStart As Long: rStart = r
+            Dim rEnd   As Long: rEnd = r
+
+            ' このAが連続する最終行を求める
             Do While rEnd + 1 <= lastRow _
-                And IsNumeric(ws.Cells(rEnd + 1, "A").Value) _
-                And CLng(ws.Cells(rEnd + 1, "A").Value) = CLng(ws.Cells(rStart, "A").Value)
+               And IsNumeric(ws.Cells(rEnd + 1, "A").Value) _
+               And CLng(ws.Cells(rEnd + 1, "A").Value) = aVal
                 rEnd = rEnd + 1
             Loop
 
-            ' 最長を選ぶ（同長は 開始が早い→終了が早い を優先）
-            Dim rMax As Long: rMax = rStart
-            Dim maxDur As Double: maxDur = -1
-            Dim rr As Long
+            ' ブロック内で最長を選ぶ（必ず「日付」として読んで判定）
+            Dim rr As Long, rMax As Long, maxDur As Double
+            rMax = rStart: maxDur = -1
+
             For rr = rStart To rEnd
-                Dim s As Variant, e As Variant
-                s = ws.Cells(rr, "D").Value
-                e = ws.Cells(rr, "E").Value
+                Dim sOK2 As Boolean, eOK2 As Boolean
+                Dim s2 As Date, e2 As Date
+                sOK2 = TryReadDateFromCell_015(ws, rr, "D", s2)
+                eOK2 = TryReadDateFromCell_015(ws, rr, "E", e2)
 
                 Dim dur As Double
-                If IsDate(s) And IsDate(e) Then
-                    dur = CDbl(CDate(e)) - CDbl(CDate(s))
+                If sOK2 And eOK2 Then
+                    dur = CDbl(e2) - CDbl(s2)
                     If dur < 0 Then dur = 0
                 Else
                     dur = 0
                 End If
 
-                Dim curS As Double: curS = IIf(IsDate(s), CDbl(CDate(s)), 0#)
-                Dim curE As Double: curE = IIf(IsDate(e), CDbl(CDate(e)), 0#)
-                Dim maxS As Double: maxS = IIf(IsDate(ws.Cells(rMax, "D").Value), CDbl(CDate(ws.Cells(rMax, "D").Value)), 0#)
-                Dim maxE As Double: maxE = IIf(IsDate(ws.Cells(rMax, "E").Value), CDbl(CDate(ws.Cells(rMax, "E").Value)), 0#)
+                Dim curS As Double: curS = IIf(sOK2, CDbl(s2), 0#)
+                Dim curE As Double: curE = IIf(eOK2, CDbl(e2), 0#)
+
+                Dim sMax As Date, eMax As Date
+                Dim sMaxOK As Boolean, eMaxOK As Boolean
+                sMaxOK = TryReadDateFromCell_015(ws, rMax, "D", sMax)
+                eMaxOK = TryReadDateFromCell_015(ws, rMax, "E", eMax)
+                Dim maxS As Double: maxS = IIf(sMaxOK, CDbl(sMax), 0#)
+                Dim maxE As Double: maxE = IIf(eMaxOK, CDbl(eMax), 0#)
 
                 If dur > maxDur _
                    Or (dur = maxDur And curS < maxS) _
@@ -2784,27 +3300,34 @@ Public Sub ResortAllByCategory_032(ByVal ws As Worksheet)
                 End If
             Next rr
 
-            ' 親としてブロック先頭へ移動（Cut→Insert）
+            ' 親としてブロック先頭へ移動（Cut→Insert）。終端は移動後に取り直す
             If rMax > rStart Then
                 ws.Rows(rMax).Cut
                 ws.Rows(rStart).Insert Shift:=xlDown
                 Application.CutCopyMode = False
-                rEnd = rEnd + 1   ' 挿入でインデックスがずれる分を補正
+
+                ' 移動後にそのAブロックの rEnd を実測で取り直し（取りこぼし防止）
+                rEnd = rStart
+                Do While rEnd + 1 <= lastRow _
+                   And IsNumeric(ws.Cells(rEnd + 1, "A").Value) _
+                   And CLng(ws.Cells(rEnd + 1, "A").Value) = aVal
+                    rEnd = rEnd + 1
+                Loop
             End If
 
-            R = rEnd + 1
+            r = rEnd + 1
         Else
-            R = R + 1
+            r = r + 1
         End If
     Loop
 
-    ' 3) 見た目の再適用（色→帯CF→区切り線）
-    On Error Resume Next
-
-    On Error GoTo 0
+    '----------------------------------------------------
+    ' 3) 見た目の再適用（帯CF→区切り線）
+    '----------------------------------------------------
     SetupPeriodConditionalFormatting_020
     ApplyCategoryDividers_020 ws
 
+CleanUp:
     Application.ScreenUpdating = su
     Application.EnableEvents = ev
 End Sub
@@ -2868,1567 +3391,29 @@ End Sub
 
 
 
-
-
-ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-順番　標準モジュール　(使えないしいらない)
-
-
-Option Explicit
-
-'============================== エントリーポイント ==============================
-Public Sub 順()
-    Dim ws As Worksheet
-    Set ws = ActiveSheet
-
-    ' --- 親イベントの前提チェック ---
-    If Selection Is Nothing Then
-        MsgBox "B列の親イベント（1セル）を選んでから実行してください。", vbExclamation
-        Exit Sub
-    End If
-    If Selection.Cells.CountLarge <> 1 Or Selection.Column <> 2 Then
-        MsgBox "B列の親イベント（1セル）を選んでから実行してください。", vbExclamation
-        Exit Sub
-    End If
-
-    Dim parentRow As Long
-    parentRow = Selection.Row
-    If parentRow < DATA_START_ROW_015 Then
-        MsgBox "データは " & DATA_START_ROW_015 & " 行目以降を想定しています。", vbExclamation
-        Exit Sub
-    End If
-    If Len(Trim$(ws.Cells(parentRow, "B").Value)) = 0 Then
-        MsgBox "親イベントのBセルが空です。", vbExclamation
-        Exit Sub
-    End If
-
-    ' --- 優先順位（分類番号）を取得 ---
-    Dim prio As Long
-    prio = AskPriorityNumber_016()
-    If prio = 0 Then Exit Sub
-
-    ' --- 子イベントを複数選択（B列）。キャンセル可 ---
-    Dim rngPick As Range, rngB As Range
-    On Error Resume Next
-    Set rngPick = Application.InputBox( _
-        Prompt:="同じセットに入れる子イベント（B列の複数セル）を選択してOK。不要ならキャンセル。", _
-        Title:="子イベントの選択", Type:=8)
-    On Error GoTo 0
-    If rngPick Is Nothing Then
-        Set rngB = Nothing
-    Else
-        Set rngB = Intersect(rngPick, ws.Columns("B"))
-    End If
-
-    ' --- 子イベントの行番号を集める（親は除外／重複排除） ---
-    Dim childRows() As Long, cnt As Long
-    If Not rngB Is Nothing Then
-        ReDim childRows(1 To rngB.Cells.Count)
-        Dim c As Range
-        For Each c In rngB.Cells
-            If c.Row >= DATA_START_ROW_015 Then
-                If c.Row <> parentRow Then
-                    If Len(Trim$(ws.Cells(c.Row, "B").Value)) > 0 Then
-                        cnt = cnt + 1
-                        childRows(cnt) = c.Row
-                    End If
-                End If
-            End If
-        Next c
-        If cnt > 0 Then
-            ReDim Preserve childRows(1 To cnt)
-            RemoveDupRowsInPlace_016 childRows
-        End If
-    End If
-
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
-
-    ' --- 0) 念のため A列を整数化（過去の小数痕跡をリセット） ---
-    NormalizePriorityColumn_031 ws
-
-    ' --- 1) 優先順位の挿入（既存の prio 以上を +1 に繰り下げ） ---
-    ShiftPrioritiesDownFrom_016 ws, prio
-
-    ' --- 2) 親・子に新しい優先順位を設定（A=prio） ---
-    ws.Cells(parentRow, "A").Value = prio
-    Dim i As Long
-    If cnt > 0 Then
-        For i = 1 To UBound(childRows)
-            ws.Cells(childRows(i), "A").Value = prio
-        Next i
-    End If
-
-    ' --- 3) 親を最上位にするための一時ソートキー列を用意 ---
-    Dim firstRow As Long: firstRow = DATA_START_ROW_015
-    Dim lastRow As Long:  lastRow = LastDataRow_016(ws)
-
-    Dim tmpCol As Long
-    tmpCol = LastCalendarCol_016(ws) + 1     ' カレンダーの右隣を一時列として使用
-
-    ' いったん 0 で初期化
-    ws.Range(ws.Cells(firstRow, tmpCol), ws.Cells(lastRow, tmpCol)).Value = 0
-
-    ' 親=1、同じ優先の子=2 をマーク（他は 0）
-    ws.Cells(parentRow, tmpCol).Value = 1
-    If cnt > 0 Then
-        For i = 1 To UBound(childRows)
-            ws.Cells(childRows(i), tmpCol).Value = 2
-        Next i
-    End If
-
-    ' --- 4) A→一時キー→D（終了日）の三段ソート ---
-    Dim sortRightCol As Long
-    sortRightCol = Application.WorksheetFunction.Max(LastCalendarCol_016(ws), tmpCol)
-
-With ws.Sort
-    .SortFields.Clear
-    .SortFields.Add Key:=ws.Range(ws.Cells(firstRow, "A"), ws.Cells(lastRow, "A")), _
-                    SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
-    .SortFields.Add Key:=ws.Range(ws.Cells(firstRow, tmpCol), ws.Cells(lastRow, tmpCol)), _
-                    SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
-    ' ここを D → E に
-    .SortFields.Add Key:=ws.Range(ws.Cells(firstRow, "E"), ws.Cells(lastRow, "E")), _
-                    SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
-    .SetRange ws.Range(ws.Cells(firstRow, 1), ws.Cells(lastRow, sortRightCol))
-    .Header = xlNo
-    .Apply
-End With
-
-    End With
-
-    ' 一時キー列をクリア
-    ws.Range(ws.Cells(firstRow, tmpCol), ws.Cells(lastRow, tmpCol)).ClearContents
-
-    ' --- 5) 見た目の更新（色／帯／区切り線） ---
-    ApplyPriorityColors_AllRows_016 ws                 ' B～C の塗り
-    SetupPeriodConditionalFormatting_020               ' 期間帯（分類色で塗る）
-    ApplyCategoryDividers_020 ws                       ' 分類が切り替わる行に二重線
-
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
-    MsgBox "分類セットの作成・並べ替え・色分けを完了しました。", vbInformation
-End Sub
-
-
-'============================== ヘルパー群 ==============================
-
-' 優先順位の入力（1以上の整数）。キャンセル時は 0 を返す。
-Private Function AskPriorityNumber_016() As Long
-    Dim x As Variant
-    x = Application.InputBox(Prompt:="親イベントの優先順位を入力してください（1が最優先の整数）。", Title:="優先順位", Type:=1)
-    If x = False Then
-        AskPriorityNumber_016 = 0
-        Exit Function
-    End If
-    On Error GoTo Bad
-    If CLng(x) < 1 Then GoTo Bad
-    AskPriorityNumber_016 = CLng(x)
-    Exit Function
-Bad:
-    MsgBox "1以上の整数を入力してください。", vbExclamation
-    AskPriorityNumber_016 = 0
-End Function
-
-' 既存の優先順位 >= p を +1（繰り下げ）
-Private Sub ShiftPrioritiesDownFrom_016(ByVal ws As Worksheet, ByVal p As Long)
-    Dim lastRow As Long: lastRow = LastDataRow_016(ws)
-    Dim R As Long, v
-    For R = DATA_START_ROW_015 To lastRow
-        v = ws.Cells(R, "A").Value
-        If IsNumeric(v) Then
-            If CLng(v) >= p Then ws.Cells(R, "A").Value = CLng(v) + 1
-        End If
-    Next R
-End Sub
-
-' C列の「終了日」を取得。年欠落はカレンダーから補完して C も年付きへ置換。
-Private Function GetRangeEndDate_016(ByVal ws As Worksheet, ByVal rowIndex As Long) As Date
-    Dim s As String, d0 As Date, d1 As Date
-    s = CStr(ws.Cells(rowIndex, "C").Value)
-    If Len(Trim$(s)) = 0 Then
-        GetRangeEndDate_016 = DateSerial(9999, 12, 31)
-        Exit Function
-    End If
-
-    Dim norm As String
-    norm = NormalizeDateRangeWithYearFromCalendar_015(s, ws, CAL_START_COL_015, CAL_DATE_ROW_015)
-    If Len(norm) > 0 Then
-        Application.EnableEvents = False
-        ws.Cells(rowIndex, "C").Value = norm
-        Application.EnableEvents = True
-        If ParseDateRange_015(norm, d0, d1) Then
-            GetRangeEndDate_016 = d1
-            Exit Function
-        End If
-    End If
-
-    On Error Resume Next
-    d1 = CDate(s)
-    On Error GoTo 0
-    If d1 > 0 Then
-        GetRangeEndDate_016 = d1
-    Else
-        GetRangeEndDate_016 = DateSerial(9999, 12, 31)
-    End If
-End Function
-
-' 子の行配列を終了日昇順に並べ替え
-Private Sub SortRowsByDate_Ascending_016(ByRef rowsArr() As Long, ByRef endsArr() As Date)
-    Dim i As Long, j As Long, n As Long
-    n = UBound(rowsArr)
-    For i = 1 To n - 1
-        For j = i + 1 To n
-            If endsArr(j) < endsArr(i) Then
-                SwapL_016 rowsArr(i), rowsArr(j)
-                SwapD_016 endsArr(i), endsArr(j)
-            End If
-        Next j
-    Next i
-End Sub
-
-Private Sub SwapL_016(ByRef a As Long, ByRef B As Long)
-    Dim T As Long: T = a: a = B: B = T
-End Sub
-Private Sub SwapD_016(ByRef a As Date, ByRef B As Date)
-    Dim T As Date: T = a: a = B: B = T
-End Sub
-
-
-
-' データの最終行（B列基準）
-Private Function LastDataRow_016(ByVal ws As Worksheet) As Long
-    Dim R As Long
-    R = ws.Cells(ws.Rows.Count, "B").End(xlUp).Row
-    If R < DATA_START_ROW_015 Then R = DATA_START_ROW_015
-    LastDataRow_016 = R
-End Function
-
-' カレンダーの最終列（4行目の右端）
-Private Function LastCalendarCol_016(ByVal ws As Worksheet) As Long
-    LastCalendarCol_016 = ws.Cells(CAL_DATE_ROW_015, ws.Columns.Count).End(xlToLeft).Column
-End Function
-
-' 優先順位カラーを適用（親＝鮮やか、子＝パステル）／A列は塗らない
-Public Sub ApplyPriorityColors_AllRows_016(ByVal ws As Worksheet)
-    Dim lastRow As Long: lastRow = LastDataRow_016(ws)
-    Dim lastCol As Long: lastCol = LastCalendarCol_016(ws)
-    Dim R As Long, p As Long
-    Dim prevP As Variant: prevP = Empty
-
-    ' B～Cの塗りだけクリア（Aは触らない）
-    ws.Range(ws.Cells(DATA_START_ROW_015, "B"), ws.Cells(lastRow, "C")).Interior.Pattern = xlNone
-
-    For R = DATA_START_ROW_015 To lastRow
-        If IsNumeric(ws.Cells(R, "A").Value) Then
-            p = CLng(ws.Cells(R, "A").Value)
-            If p >= 1 Then
-                Dim baseCol As Long, useCol As Long
-                baseCol = PriorityColor_016(p)                  ' 子用（従来のパステル）
-                If prevP <> p Then                              ' ブロック先頭＝親
-                    useCol = SaturateColor_016(baseCol, 1.8, 0.88) ' 親：彩度↑、わずかに濃く
-                    prevP = p
-                Else
-                    useCol = baseCol                            ' 子：そのまま
-                End If
-
-                ' B～Cだけ塗る（A列は塗らない）
-                ws.Range(ws.Cells(R, "B"), ws.Cells(R, "C")).Interior.Color = useCol
-
-            End If
-        Else
-            prevP = Empty
-        End If
-    Next R
-End Sub
-
-
-
-' 優先順位→色（パステル10色。11以上はループ）
-Private Function PriorityColor_016(ByVal p As Long) As Long
-    Dim palette As Variant
-    palette = Array(RGB(255, 235, 235), RGB(235, 245, 255), RGB(235, 255, 235), RGB(255, 245, 230), RGB(245, 235, 255), _
-                    RGB(255, 240, 250), RGB(235, 255, 255), RGB(255, 255, 230), RGB(240, 248, 255), RGB(240, 255, 240))
-    Dim idx As Long
-    idx = (p - 1) Mod (UBound(palette) + 1)
-    PriorityColor_016 = palette(idx)
-End Function
-
-' 指定色を暗く（濃く）する。factor=0.75 で 75% の明るさに。
-Private Function DarkerColor_016(ByVal col As Long, Optional ByVal factor As Double = 0.75) As Long
-    Dim R As Long, G As Long, B As Long
-    R = col Mod 256
-    G = (col \ 256) Mod 256
-    B = (col \ 65536) Mod 256
-    R = CLng(R * factor): If R < 0 Then R = 0
-    G = CLng(G * factor): If G < 0 Then G = 0
-    B = CLng(B * factor): If B < 0 Then B = 0
-    DarkerColor_016 = RGB(R, G, B)
-End Function
-
-' 指定色を「同じ色相で鮮やかに」する（親用）
-' satFactor: 彩度倍率、lightFactor: 明度倍率（<1で少し濃く）
-Public Function SaturateColor_016(ByVal col As Long, _
-                                  Optional ByVal satFactor As Double = 1.8, _
-                                  Optional ByVal lightFactor As Double = 0.9) As Long
-    Dim R As Double, G As Double, B As Double
-    R = (col Mod 256) / 255#
-    G = ((col \ 256) Mod 256) / 255#
-    B = ((col \ 65536) Mod 256) / 255#
-
-    Dim H As Double, s As Double, L As Double
-    RGB_To_HSL_016 R, G, B, H, s, L
-
-    s = s * satFactor: If s > 1# Then s = 1#
-    L = L * lightFactor: If L < 0# Then L = 0#: If L > 1# Then L = 1#
-
-    Dim rr As Double, gg As Double, bb As Double
-    HSL_To_RGB_016 H, s, L, rr, gg, bb
-
-    SaturateColor_016 = RGB(CLng(rr * 255#), CLng(gg * 255#), CLng(bb * 255#))
-End Function
-
-' --- RGB(0..1) → HSL(0..1)
-Private Sub RGB_To_HSL_016(ByVal R As Double, ByVal G As Double, ByVal B As Double, _
-                           ByRef H As Double, ByRef s As Double, ByRef L As Double)
-    Dim maxV As Double, minv As Double, d As Double
-    maxV = R: If G > maxV Then maxV = G: If B > maxV Then maxV = B
-    minv = R: If G < minv Then minv = G: If B < minv Then minv = B
-    L = (maxV + minv) / 2#
-    If maxV = minv Then
-        H = 0#: s = 0#
-    Else
-        d = maxV - minv
-        If L < 0.5 Then s = d / (maxV + minv) Else s = d / (2# - maxV - minv)
-        If maxV = R Then
-            H = (G - B) / d + IIf(G < B, 6#, 0#)
-        ElseIf maxV = G Then
-            H = (B - R) / d + 2#
-        Else
-            H = (R - G) / d + 4#
-        End If
-        H = H / 6#
-    End If
-End Sub
-
-' --- HSL(0..1) → RGB(0..1)
-Private Sub HSL_To_RGB_016(ByVal H As Double, ByVal s As Double, ByVal L As Double, _
-                            ByRef R As Double, ByRef G As Double, ByRef B As Double)
-    Dim q As Double, p As Double
-    If s = 0# Then
-        R = L: G = L: B = L
-    Else
-        If L < 0.5 Then q = L * (1# + s) Else q = L + s - L * s
-        p = 2# * L - q
-        R = Hue2RGB_016(p, q, H + 1# / 3#)
-        G = Hue2RGB_016(p, q, H)
-        B = Hue2RGB_016(p, q, H - 1# / 3#)
-    End If
-End Sub
-
-Private Function Hue2RGB_016(ByVal p As Double, ByVal q As Double, ByVal T As Double) As Double
-    If T < 0# Then T = T + 1#
-    If T > 1# Then T = T - 1#
-    If T < 1# / 6# Then
-        Hue2RGB_016 = p + (q - p) * 6# * T
-    ElseIf T < 1# / 2# Then
-        Hue2RGB_016 = q
-    ElseIf T < 2# / 3# Then
-        Hue2RGB_016 = p + (q - p) * (2# / 3# - T) * 6#
-    Else
-        Hue2RGB_016 = p
-    End If
-End Function
-
-
-'=== A列を整数に正規化（過去の 2.000001 等を除去）===
+'=== A列の優先番号を整数に正規化（2.000001 等を 2 に揃える） ===
 Public Sub NormalizePriorityColumn_031(ByVal ws As Worksheet)
-    Dim lastRow As Long: lastRow = LastDataRow_016(ws)
-    Dim R As Long, v
-    For R = DATA_START_ROW_015 To lastRow
-        v = ws.Cells(R, "A").Value
-        If IsNumeric(v) Then ws.Cells(R, "A").Value = CLng(v)
-    Next R
-End Sub
+    If ws Is Nothing Then Set ws = ActiveSheet
 
-'=== 重複行番号を除去（0でマーキング→圧縮）===
-Private Sub RemoveDupRowsInPlace_016(ByRef arr() As Long)
-    Dim i As Long, j As Long, n As Long
-    If (Not Not arr) = 0 Then Exit Sub
-    n = UBound(arr)
-    For i = 1 To n - 1
-        If arr(i) <> 0 Then
-            For j = i + 1 To n
-                If arr(j) = arr(i) Then arr(j) = 0
-            Next j
+    Dim lastRow As Long, r As Long, v As Variant
+    ' A/B/D/E のいずれかの最終行と開始行の最大をとる
+    lastRow = Application.Max( _
+                  ws.Cells(ws.Rows.Count, "A").End(xlUp).Row, _
+                  ws.Cells(ws.Rows.Count, "B").End(xlUp).Row, _
+                  ws.Cells(ws.Rows.Count, "D").End(xlUp).Row, _
+                  ws.Cells(ws.Rows.Count, "E").End(xlUp).Row, _
+                  DATA_START_ROW_015)
+
+    For r = DATA_START_ROW_015 To lastRow
+        v = ws.Cells(r, "A").Value
+        If Len(v & "") > 0 And IsNumeric(v) Then
+            ws.Cells(r, "A").Value = CLng(v)   ' 整数化
+            ws.Cells(r, "A").NumberFormat = "0"
         End If
-    Next i
-    Dim tmp() As Long, k As Long
-    ReDim tmp(1 To n)
-    For i = 1 To n
-        If arr(i) <> 0 Then
-            k = k + 1
-            tmp(k) = arr(i)
-        End If
-    Next i
-    If k = 0 Then
-        Erase arr
-    Else
-        ReDim arr(1 To k)
-        For i = 1 To k
-            arr(i) = tmp(i)
-        Next i
-    End If
+    Next r
 End Sub
 
 
-
-
-
-
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-'=== modJapanHolidays_042 ===標準モジュール
-Option Explicit
-
-' 祝日シート（A列=日付、B列=名称）を見て、その日が祝日なら True を返す
-' ※ ws は基準シート（ActiveSheet でOK）。同じブック内の「祝日」シートを参照します。
-Public Function IsHolidayJP_042(ByVal ws As Worksheet, ByVal d As Date, ByRef nameOut As String) As Boolean
-    Dim sh As Worksheet
-    On Error Resume Next
-    Set sh = ws.Parent.Worksheets("祝日")
-    On Error GoTo 0
-    If sh Is Nothing Then Exit Function ' 祝日シートが無ければ False（＝従来どおり土日だけ色）
-
-    ' 時刻を切り捨てて一致判定（Excel内部は日付=連続小数）
-    Dim key As Double: key = CDbl(DateSerial(Year(d), Month(d), Day(d)))
-    Dim m As Variant
-    m = Application.Match(key, sh.Columns(1), 0) ' A列に一致日付があれば行番号
-    If IsError(m) Then
-        IsHolidayJP_042 = False
-    Else
-        nameOut = CStr(sh.Cells(CLng(m), 2).Value) ' B列=祝日名
-        IsHolidayJP_042 = True
-    End If
-End Function
-
-'（任意）内閣府の「国民の祝日」CSVを読み込んで「祝日」シートを作る
-' 使い方：ImportCabinetHolidaysCsv_042 "C:\path\syukujitsu.csv"
-Public Sub ImportCabinetHolidaysCsv_042(ByVal csvPath As String)
-    Dim sh As Worksheet
-    On Error Resume Next
-    Set sh = ThisWorkbook.Worksheets("祝日")
-    On Error GoTo 0
-    If sh Is Nothing Then
-        Set sh = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.Count))
-        sh.name = "祝日"
-    End If
-
-    sh.Cells.Clear
-    sh.Range("A1").Value = "日付"
-    sh.Range("B1").Value = "名称"
-
-    Dim f As Integer, line As String, arr As Variant, R As Long
-    f = FreeFile
-    Open csvPath For Input As #f
-    R = 1
-    Do While Not EOF(f)
-        Line Input #f, line
-        ' 1行目のヘッダ（"日付","名称" 等）はスキップ
-        If InStr(line, "日付") > 0 And InStr(line, "名称") > 0 Then
-            ' skip
-        Else
-            arr = Split(line, ",")
-            If UBound(arr) >= 1 Then
-                R = R + 1
-                On Error Resume Next
-                sh.Cells(R, 1).Value = CDate(Replace(arr(0), """", ""))
-                sh.Cells(R, 1).NumberFormatLocal = "yyyy/m/d"
-                sh.Cells(R, 2).Value = Replace(arr(1), """", "")
-                On Error GoTo 0
-            End If
-        End If
-    Loop
-    Close #f
-
-    ' 日付昇順に整列（重複は手元のCSVに従う）
-    If R > 1 Then
-        With sh.Sort
-            .SortFields.Clear
-            .SortFields.Add key:=sh.Range(sh.Cells(2, 1), sh.Cells(R, 1)), _
-                            SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
-            .SetRange sh.Range(sh.Cells(1, 1), sh.Cells(R, 2))
-            .Header = xlYes
-            .Apply
-        End With
-    End If
-
-    ' 見えないシートにしておく（必要なら xlSheetVisible に）
-    sh.Visible = xlSheetHidden
-End Sub
-
-
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-祝日　　---シート名が祝日で標準モジュール
-
-
-
-国民の祝日・休日月日	国民の祝日・休日名称
-1955/1/1	元日
-1955/1/15	成人の日
-1955/3/21	春分の日
-1955/4/29	天皇誕生日
-1955/5/3	憲法記念日
-1955/5/5	こどもの日
-1955/9/24	秋分の日
-1955/11/3	文化の日
-1955/11/23	勤労感謝の日
-1956/1/1	元日
-1956/1/15	成人の日
-1956/3/21	春分の日
-1956/4/29	天皇誕生日
-1956/5/3	憲法記念日
-1956/5/5	こどもの日
-1956/9/23	秋分の日
-1956/11/3	文化の日
-1956/11/23	勤労感謝の日
-1957/1/1	元日
-1957/1/15	成人の日
-1957/3/21	春分の日
-1957/4/29	天皇誕生日
-1957/5/3	憲法記念日
-1957/5/5	こどもの日
-1957/9/23	秋分の日
-1957/11/3	文化の日
-1957/11/23	勤労感謝の日
-1958/1/1	元日
-1958/1/15	成人の日
-1958/3/21	春分の日
-1958/4/29	天皇誕生日
-1958/5/3	憲法記念日
-1958/5/5	こどもの日
-1958/9/23	秋分の日
-1958/11/3	文化の日
-1958/11/23	勤労感謝の日
-1959/1/1	元日
-1959/1/15	成人の日
-1959/3/21	春分の日
-1959/4/10	結婚の儀
-1959/4/29	天皇誕生日
-1959/5/3	憲法記念日
-1959/5/5	こどもの日
-1959/9/24	秋分の日
-1959/11/3	文化の日
-1959/11/23	勤労感謝の日
-1960/1/1	元日
-1960/1/15	成人の日
-1960/3/20	春分の日
-1960/4/29	天皇誕生日
-1960/5/3	憲法記念日
-1960/5/5	こどもの日
-1960/9/23	秋分の日
-1960/11/3	文化の日
-1960/11/23	勤労感謝の日
-1961/1/1	元日
-1961/1/15	成人の日
-1961/3/21	春分の日
-1961/4/29	天皇誕生日
-1961/5/3	憲法記念日
-1961/5/5	こどもの日
-1961/9/23	秋分の日
-1961/11/3	文化の日
-1961/11/23	勤労感謝の日
-1962/1/1	元日
-1962/1/15	成人の日
-1962/3/21	春分の日
-1962/4/29	天皇誕生日
-1962/5/3	憲法記念日
-1962/5/5	こどもの日
-1962/9/23	秋分の日
-1962/11/3	文化の日
-1962/11/23	勤労感謝の日
-1963/1/1	元日
-1963/1/15	成人の日
-1963/3/21	春分の日
-1963/4/29	天皇誕生日
-1963/5/3	憲法記念日
-1963/5/5	こどもの日
-1963/9/24	秋分の日
-1963/11/3	文化の日
-1963/11/23	勤労感謝の日
-1964/1/1	元日
-1964/1/15	成人の日
-1964/3/20	春分の日
-1964/4/29	天皇誕生日
-1964/5/3	憲法記念日
-1964/5/5	こどもの日
-1964/9/23	秋分の日
-1964/11/3	文化の日
-1964/11/23	勤労感謝の日
-1965/1/1	元日
-1965/1/15	成人の日
-1965/3/21	春分の日
-1965/4/29	天皇誕生日
-1965/5/3	憲法記念日
-1965/5/5	こどもの日
-1965/9/23	秋分の日
-1965/11/3	文化の日
-1965/11/23	勤労感謝の日
-1966/1/1	元日
-1966/1/15	成人の日
-1966/3/21	春分の日
-1966/4/29	天皇誕生日
-1966/5/3	憲法記念日
-1966/5/5	こどもの日
-1966/9/15	敬老の日
-1966/9/23	秋分の日
-1966/10/10	体育の日
-1966/11/3	文化の日
-1966/11/23	勤労感謝の日
-1967/1/1	元日
-1967/1/15	成人の日
-1967/2/11	建国記念の日
-1967/3/21	春分の日
-1967/4/29	天皇誕生日
-1967/5/3	憲法記念日
-1967/5/5	こどもの日
-1967/9/15	敬老の日
-1967/9/24	秋分の日
-1967/10/10	体育の日
-1967/11/3	文化の日
-1967/11/23	勤労感謝の日
-1968/1/1	元日
-1968/1/15	成人の日
-1968/2/11	建国記念の日
-1968/3/20	春分の日
-1968/4/29	天皇誕生日
-1968/5/3	憲法記念日
-1968/5/5	こどもの日
-1968/9/15	敬老の日
-1968/9/23	秋分の日
-1968/10/10	体育の日
-1968/11/3	文化の日
-1968/11/23	勤労感謝の日
-1969/1/1	元日
-1969/1/15	成人の日
-1969/2/11	建国記念の日
-1969/3/21	春分の日
-1969/4/29	天皇誕生日
-1969/5/3	憲法記念日
-1969/5/5	こどもの日
-1969/9/15	敬老の日
-1969/9/23	秋分の日
-1969/10/10	体育の日
-1969/11/3	文化の日
-1969/11/23	勤労感謝の日
-1970/1/1	元日
-1970/1/15	成人の日
-1970/2/11	建国記念の日
-1970/3/21	春分の日
-1970/4/29	天皇誕生日
-1970/5/3	憲法記念日
-1970/5/5	こどもの日
-1970/9/15	敬老の日
-1970/9/23	秋分の日
-1970/10/10	体育の日
-1970/11/3	文化の日
-1970/11/23	勤労感謝の日
-1971/1/1	元日
-1971/1/15	成人の日
-1971/2/11	建国記念の日
-1971/3/21	春分の日
-1971/4/29	天皇誕生日
-1971/5/3	憲法記念日
-1971/5/5	こどもの日
-1971/9/15	敬老の日
-1971/9/24	秋分の日
-1971/10/10	体育の日
-1971/11/3	文化の日
-1971/11/23	勤労感謝の日
-1972/1/1	元日
-1972/1/15	成人の日
-1972/2/11	建国記念の日
-1972/3/20	春分の日
-1972/4/29	天皇誕生日
-1972/5/3	憲法記念日
-1972/5/5	こどもの日
-1972/9/15	敬老の日
-1972/9/23	秋分の日
-1972/10/10	体育の日
-1972/11/3	文化の日
-1972/11/23	勤労感謝の日
-1973/1/1	元日
-1973/1/15	成人の日
-1973/2/11	建国記念の日
-1973/3/21	春分の日
-1973/4/29	天皇誕生日
-1973/4/30	休日
-1973/5/3	憲法記念日
-1973/5/5	こどもの日
-1973/9/15	敬老の日
-1973/9/23	秋分の日
-1973/9/24	休日
-1973/10/10	体育の日
-1973/11/3	文化の日
-1973/11/23	勤労感謝の日
-1974/1/1	元日
-1974/1/15	成人の日
-1974/2/11	建国記念の日
-1974/3/21	春分の日
-1974/4/29	天皇誕生日
-1974/5/3	憲法記念日
-1974/5/5	こどもの日
-1974/5/6	休日
-1974/9/15	敬老の日
-1974/9/16	休日
-1974/9/23	秋分の日
-1974/10/10	体育の日
-1974/11/3	文化の日
-1974/11/4	休日
-1974/11/23	勤労感謝の日
-1975/1/1	元日
-1975/1/15	成人の日
-1975/2/11	建国記念の日
-1975/3/21	春分の日
-1975/4/29	天皇誕生日
-1975/5/3	憲法記念日
-1975/5/5	こどもの日
-1975/9/15	敬老の日
-1975/9/24	秋分の日
-1975/10/10	体育の日
-1975/11/3	文化の日
-1975/11/23	勤労感謝の日
-1975/11/24	休日
-1976/1/1	元日
-1976/1/15	成人の日
-1976/2/11	建国記念の日
-1976/3/20	春分の日
-1976/4/29	天皇誕生日
-1976/5/3	憲法記念日
-1976/5/5	こどもの日
-1976/9/15	敬老の日
-1976/9/23	秋分の日
-1976/10/10	体育の日
-1976/10/11	休日
-1976/11/3	文化の日
-1976/11/23	勤労感謝の日
-1977/1/1	元日
-1977/1/15	成人の日
-1977/2/11	建国記念の日
-1977/3/21	春分の日
-1977/4/29	天皇誕生日
-1977/5/3	憲法記念日
-1977/5/5	こどもの日
-1977/9/15	敬老の日
-1977/9/23	秋分の日
-1977/10/10	体育の日
-1977/11/3	文化の日
-1977/11/23	勤労感謝の日
-1978/1/1	元日
-1978/1/2	休日
-1978/1/15	成人の日
-1978/1/16	休日
-1978/2/11	建国記念の日
-1978/3/21	春分の日
-1978/4/29	天皇誕生日
-1978/5/3	憲法記念日
-1978/5/5	こどもの日
-1978/9/15	敬老の日
-1978/9/23	秋分の日
-1978/10/10	体育の日
-1978/11/3	文化の日
-1978/11/23	勤労感謝の日
-1979/1/1	元日
-1979/1/15	成人の日
-1979/2/11	建国記念の日
-1979/2/12	休日
-1979/3/21	春分の日
-1979/4/29	天皇誕生日
-1979/4/30	休日
-1979/5/3	憲法記念日
-1979/5/5	こどもの日
-1979/9/15	敬老の日
-1979/9/24	秋分の日
-1979/10/10	体育の日
-1979/11/3	文化の日
-1979/11/23	勤労感謝の日
-1980/1/1	元日
-1980/1/15	成人の日
-1980/2/11	建国記念の日
-1980/3/20	春分の日
-1980/4/29	天皇誕生日
-1980/5/3	憲法記念日
-1980/5/5	こどもの日
-1980/9/15	敬老の日
-1980/9/23	秋分の日
-1980/10/10	体育の日
-1980/11/3	文化の日
-1980/11/23	勤労感謝の日
-1980/11/24	休日
-1981/1/1	元日
-1981/1/15	成人の日
-1981/2/11	建国記念の日
-1981/3/21	春分の日
-1981/4/29	天皇誕生日
-1981/5/3	憲法記念日
-1981/5/4	休日
-1981/5/5	こどもの日
-1981/9/15	敬老の日
-1981/9/23	秋分の日
-1981/10/10	体育の日
-1981/11/3	文化の日
-1981/11/23	勤労感謝の日
-1982/1/1	元日
-1982/1/15	成人の日
-1982/2/11	建国記念の日
-1982/3/21	春分の日
-1982/3/22	休日
-1982/4/29	天皇誕生日
-1982/5/3	憲法記念日
-1982/5/5	こどもの日
-1982/9/15	敬老の日
-1982/9/23	秋分の日
-1982/10/10	体育の日
-1982/10/11	休日
-1982/11/3	文化の日
-1982/11/23	勤労感謝の日
-1983/1/1	元日
-1983/1/15	成人の日
-1983/2/11	建国記念の日
-1983/3/21	春分の日
-1983/4/29	天皇誕生日
-1983/5/3	憲法記念日
-1983/5/5	こどもの日
-1983/9/15	敬老の日
-1983/9/23	秋分の日
-1983/10/10	体育の日
-1983/11/3	文化の日
-1983/11/23	勤労感謝の日
-1984/1/1	元日
-1984/1/2	休日
-1984/1/15	成人の日
-1984/1/16	休日
-1984/2/11	建国記念の日
-1984/3/20	春分の日
-1984/4/29	天皇誕生日
-1984/4/30	休日
-1984/5/3	憲法記念日
-1984/5/5	こどもの日
-1984/9/15	敬老の日
-1984/9/23	秋分の日
-1984/9/24	休日
-1984/10/10	体育の日
-1984/11/3	文化の日
-1984/11/23	勤労感謝の日
-1985/1/1	元日
-1985/1/15	成人の日
-1985/2/11	建国記念の日
-1985/3/21	春分の日
-1985/4/29	天皇誕生日
-1985/5/3	憲法記念日
-1985/5/5	こどもの日
-1985/5/6	休日
-1985/9/15	敬老の日
-1985/9/16	休日
-1985/9/23	秋分の日
-1985/10/10	体育の日
-1985/11/3	文化の日
-1985/11/4	休日
-1985/11/23	勤労感謝の日
-1986/1/1	元日
-1986/1/15	成人の日
-1986/2/11	建国記念の日
-1986/3/21	春分の日
-1986/4/29	天皇誕生日
-1986/5/3	憲法記念日
-1986/5/5	こどもの日
-1986/9/15	敬老の日
-1986/9/23	秋分の日
-1986/10/10	体育の日
-1986/11/3	文化の日
-1986/11/23	勤労感謝の日
-1986/11/24	休日
-1987/1/1	元日
-1987/1/15	成人の日
-1987/2/11	建国記念の日
-1987/3/21	春分の日
-1987/4/29	天皇誕生日
-1987/5/3	憲法記念日
-1987/5/4	休日
-1987/5/5	こどもの日
-1987/9/15	敬老の日
-1987/9/23	秋分の日
-1987/10/10	体育の日
-1987/11/3	文化の日
-1987/11/23	勤労感謝の日
-1988/1/1	元日
-1988/1/15	成人の日
-1988/2/11	建国記念の日
-1988/3/20	春分の日
-1988/3/21	休日
-1988/4/29	天皇誕生日
-1988/5/3	憲法記念日
-1988/5/4	休日
-1988/5/5	こどもの日
-1988/9/15	敬老の日
-1988/9/23	秋分の日
-1988/10/10	体育の日
-1988/11/3	文化の日
-1988/11/23	勤労感謝の日
-1989/1/1	元日
-1989/1/2	休日
-1989/1/15	成人の日
-1989/1/16	休日
-1989/2/11	建国記念の日
-1989/2/24	大喪の礼
-1989/3/21	春分の日
-1989/4/29	みどりの日
-1989/5/3	憲法記念日
-1989/5/4	休日
-1989/5/5	こどもの日
-1989/9/15	敬老の日
-1989/9/23	秋分の日
-1989/10/10	体育の日
-1989/11/3	文化の日
-1989/11/23	勤労感謝の日
-1989/12/23	天皇誕生日
-1990/1/1	元日
-1990/1/15	成人の日
-1990/2/11	建国記念の日
-1990/2/12	休日
-1990/3/21	春分の日
-1990/4/29	みどりの日
-1990/4/30	休日
-1990/5/3	憲法記念日
-1990/5/4	休日
-1990/5/5	こどもの日
-1990/9/15	敬老の日
-1990/9/23	秋分の日
-1990/9/24	休日
-1990/10/10	体育の日
-1990/11/3	文化の日
-1990/11/12	即位礼正殿の儀
-1990/11/23	勤労感謝の日
-1990/12/23	天皇誕生日
-1990/12/24	休日
-1991/1/1	元日
-1991/1/15	成人の日
-1991/2/11	建国記念の日
-1991/3/21	春分の日
-1991/4/29	みどりの日
-1991/5/3	憲法記念日
-1991/5/4	休日
-1991/5/5	こどもの日
-1991/5/6	休日
-1991/9/15	敬老の日
-1991/9/16	休日
-1991/9/23	秋分の日
-1991/10/10	体育の日
-1991/11/3	文化の日
-1991/11/4	休日
-1991/11/23	勤労感謝の日
-1991/12/23	天皇誕生日
-1992/1/1	元日
-1992/1/15	成人の日
-1992/2/11	建国記念の日
-1992/3/20	春分の日
-1992/4/29	みどりの日
-1992/5/3	憲法記念日
-1992/5/4	休日
-1992/5/5	こどもの日
-1992/9/15	敬老の日
-1992/9/23	秋分の日
-1992/10/10	体育の日
-1992/11/3	文化の日
-1992/11/23	勤労感謝の日
-1992/12/23	天皇誕生日
-1993/1/1	元日
-1993/1/15	成人の日
-1993/2/11	建国記念の日
-1993/3/20	春分の日
-1993/4/29	みどりの日
-1993/5/3	憲法記念日
-1993/5/4	休日
-1993/5/5	こどもの日
-1993/6/9	結婚の儀
-1993/9/15	敬老の日
-1993/9/23	秋分の日
-1993/10/10	体育の日
-1993/10/11	休日
-1993/11/3	文化の日
-1993/11/23	勤労感謝の日
-1993/12/23	天皇誕生日
-1994/1/1	元日
-1994/1/15	成人の日
-1994/2/11	建国記念の日
-1994/3/21	春分の日
-1994/4/29	みどりの日
-1994/5/3	憲法記念日
-1994/5/4	休日
-1994/5/5	こどもの日
-1994/9/15	敬老の日
-1994/9/23	秋分の日
-1994/10/10	体育の日
-1994/11/3	文化の日
-1994/11/23	勤労感謝の日
-1994/12/23	天皇誕生日
-1995/1/1	元日
-1995/1/2	休日
-1995/1/15	成人の日
-1995/1/16	休日
-1995/2/11	建国記念の日
-1995/3/21	春分の日
-1995/4/29	みどりの日
-1995/5/3	憲法記念日
-1995/5/4	休日
-1995/5/5	こどもの日
-1995/9/15	敬老の日
-1995/9/23	秋分の日
-1995/10/10	体育の日
-1995/11/3	文化の日
-1995/11/23	勤労感謝の日
-1995/12/23	天皇誕生日
-1996/1/1	元日
-1996/1/15	成人の日
-1996/2/11	建国記念の日
-1996/2/12	休日
-1996/3/20	春分の日
-1996/4/29	みどりの日
-1996/5/3	憲法記念日
-1996/5/4	休日
-1996/5/5	こどもの日
-1996/5/6	休日
-1996/7/20	海の日
-1996/9/15	敬老の日
-1996/9/16	休日
-1996/9/23	秋分の日
-1996/10/10	体育の日
-1996/11/3	文化の日
-1996/11/4	休日
-1996/11/23	勤労感謝の日
-1996/12/23	天皇誕生日
-1997/1/1	元日
-1997/1/15	成人の日
-1997/2/11	建国記念の日
-1997/3/20	春分の日
-1997/4/29	みどりの日
-1997/5/3	憲法記念日
-1997/5/5	こどもの日
-1997/7/20	海の日
-1997/7/21	休日
-1997/9/15	敬老の日
-1997/9/23	秋分の日
-1997/10/10	体育の日
-1997/11/3	文化の日
-1997/11/23	勤労感謝の日
-1997/11/24	休日
-1997/12/23	天皇誕生日
-1998/1/1	元日
-1998/1/15	成人の日
-1998/2/11	建国記念の日
-1998/3/21	春分の日
-1998/4/29	みどりの日
-1998/5/3	憲法記念日
-1998/5/4	休日
-1998/5/5	こどもの日
-1998/7/20	海の日
-1998/9/15	敬老の日
-1998/9/23	秋分の日
-1998/10/10	体育の日
-1998/11/3	文化の日
-1998/11/23	勤労感謝の日
-1998/12/23	天皇誕生日
-1999/1/1	元日
-1999/1/15	成人の日
-1999/2/11	建国記念の日
-1999/3/21	春分の日
-1999/3/22	休日
-1999/4/29	みどりの日
-1999/5/3	憲法記念日
-1999/5/4	休日
-1999/5/5	こどもの日
-1999/7/20	海の日
-1999/9/15	敬老の日
-1999/9/23	秋分の日
-1999/10/10	体育の日
-1999/10/11	休日
-1999/11/3	文化の日
-1999/11/23	勤労感謝の日
-1999/12/23	天皇誕生日
-2000/1/1	元日
-2000/1/10	成人の日
-2000/2/11	建国記念の日
-2000/3/20	春分の日
-2000/4/29	みどりの日
-2000/5/3	憲法記念日
-2000/5/4	休日
-2000/5/5	こどもの日
-2000/7/20	海の日
-2000/9/15	敬老の日
-2000/9/23	秋分の日
-2000/10/9	体育の日
-2000/11/3	文化の日
-2000/11/23	勤労感謝の日
-2000/12/23	天皇誕生日
-2001/1/1	元日
-2001/1/8	成人の日
-2001/2/11	建国記念の日
-2001/2/12	休日
-2001/3/20	春分の日
-2001/4/29	みどりの日
-2001/4/30	休日
-2001/5/3	憲法記念日
-2001/5/4	休日
-2001/5/5	こどもの日
-2001/7/20	海の日
-2001/9/15	敬老の日
-2001/9/23	秋分の日
-2001/9/24	休日
-2001/10/8	体育の日
-2001/11/3	文化の日
-2001/11/23	勤労感謝の日
-2001/12/23	天皇誕生日
-2001/12/24	休日
-2002/1/1	元日
-2002/1/14	成人の日
-2002/2/11	建国記念の日
-2002/3/21	春分の日
-2002/4/29	みどりの日
-2002/5/3	憲法記念日
-2002/5/4	休日
-2002/5/5	こどもの日
-2002/5/6	休日
-2002/7/20	海の日
-2002/9/15	敬老の日
-2002/9/16	休日
-2002/9/23	秋分の日
-2002/10/14	体育の日
-2002/11/3	文化の日
-2002/11/4	休日
-2002/11/23	勤労感謝の日
-2002/12/23	天皇誕生日
-2003/1/1	元日
-2003/1/13	成人の日
-2003/2/11	建国記念の日
-2003/3/21	春分の日
-2003/4/29	みどりの日
-2003/5/3	憲法記念日
-2003/5/5	こどもの日
-2003/7/21	海の日
-2003/9/15	敬老の日
-2003/9/23	秋分の日
-2003/10/13	体育の日
-2003/11/3	文化の日
-2003/11/23	勤労感謝の日
-2003/11/24	休日
-2003/12/23	天皇誕生日
-2004/1/1	元日
-2004/1/12	成人の日
-2004/2/11	建国記念の日
-2004/3/20	春分の日
-2004/4/29	みどりの日
-2004/5/3	憲法記念日
-2004/5/4	休日
-2004/5/5	こどもの日
-2004/7/19	海の日
-2004/9/20	敬老の日
-2004/9/23	秋分の日
-2004/10/11	体育の日
-2004/11/3	文化の日
-2004/11/23	勤労感謝の日
-2004/12/23	天皇誕生日
-2005/1/1	元日
-2005/1/10	成人の日
-2005/2/11	建国記念の日
-2005/3/20	春分の日
-2005/3/21	休日
-2005/4/29	みどりの日
-2005/5/3	憲法記念日
-2005/5/4	休日
-2005/5/5	こどもの日
-2005/7/18	海の日
-2005/9/19	敬老の日
-2005/9/23	秋分の日
-2005/10/10	体育の日
-2005/11/3	文化の日
-2005/11/23	勤労感謝の日
-2005/12/23	天皇誕生日
-2006/1/1	元日
-2006/1/2	休日
-2006/1/9	成人の日
-2006/2/11	建国記念の日
-2006/3/21	春分の日
-2006/4/29	みどりの日
-2006/5/3	憲法記念日
-2006/5/4	休日
-2006/5/5	こどもの日
-2006/7/17	海の日
-2006/9/18	敬老の日
-2006/9/23	秋分の日
-2006/10/9	体育の日
-2006/11/3	文化の日
-2006/11/23	勤労感謝の日
-2006/12/23	天皇誕生日
-2007/1/1	元日
-2007/1/8	成人の日
-2007/2/11	建国記念の日
-2007/2/12	休日
-2007/3/21	春分の日
-2007/4/29	昭和の日
-2007/4/30	休日
-2007/5/3	憲法記念日
-2007/5/4	みどりの日
-2007/5/5	こどもの日
-2007/7/16	海の日
-2007/9/17	敬老の日
-2007/9/23	秋分の日
-2007/9/24	休日
-2007/10/8	体育の日
-2007/11/3	文化の日
-2007/11/23	勤労感謝の日
-2007/12/23	天皇誕生日
-2007/12/24	休日
-2008/1/1	元日
-2008/1/14	成人の日
-2008/2/11	建国記念の日
-2008/3/20	春分の日
-2008/4/29	昭和の日
-2008/5/3	憲法記念日
-2008/5/4	みどりの日
-2008/5/5	こどもの日
-2008/5/6	休日
-2008/7/21	海の日
-2008/9/15	敬老の日
-2008/9/23	秋分の日
-2008/10/13	体育の日
-2008/11/3	文化の日
-2008/11/23	勤労感謝の日
-2008/11/24	休日
-2008/12/23	天皇誕生日
-2009/1/1	元日
-2009/1/12	成人の日
-2009/2/11	建国記念の日
-2009/3/20	春分の日
-2009/4/29	昭和の日
-2009/5/3	憲法記念日
-2009/5/4	みどりの日
-2009/5/5	こどもの日
-2009/5/6	休日
-2009/7/20	海の日
-2009/9/21	敬老の日
-2009/9/22	休日
-2009/9/23	秋分の日
-2009/10/12	体育の日
-2009/11/3	文化の日
-2009/11/23	勤労感謝の日
-2009/12/23	天皇誕生日
-2010/1/1	元日
-2010/1/11	成人の日
-2010/2/11	建国記念の日
-2010/3/21	春分の日
-2010/3/22	休日
-2010/4/29	昭和の日
-2010/5/3	憲法記念日
-2010/5/4	みどりの日
-2010/5/5	こどもの日
-2010/7/19	海の日
-2010/9/20	敬老の日
-2010/9/23	秋分の日
-2010/10/11	体育の日
-2010/11/3	文化の日
-2010/11/23	勤労感謝の日
-2010/12/23	天皇誕生日
-2011/1/1	元日
-2011/1/10	成人の日
-2011/2/11	建国記念の日
-2011/3/21	春分の日
-2011/4/29	昭和の日
-2011/5/3	憲法記念日
-2011/5/4	みどりの日
-2011/5/5	こどもの日
-2011/7/18	海の日
-2011/9/19	敬老の日
-2011/9/23	秋分の日
-2011/10/10	体育の日
-2011/11/3	文化の日
-2011/11/23	勤労感謝の日
-2011/12/23	天皇誕生日
-2012/1/1	元日
-2012/1/2	休日
-2012/1/9	成人の日
-2012/2/11	建国記念の日
-2012/3/20	春分の日
-2012/4/29	昭和の日
-2012/4/30	休日
-2012/5/3	憲法記念日
-2012/5/4	みどりの日
-2012/5/5	こどもの日
-2012/7/16	海の日
-2012/9/17	敬老の日
-2012/9/22	秋分の日
-2012/10/8	体育の日
-2012/11/3	文化の日
-2012/11/23	勤労感謝の日
-2012/12/23	天皇誕生日
-2012/12/24	休日
-2013/1/1	元日
-2013/1/14	成人の日
-2013/2/11	建国記念の日
-2013/3/20	春分の日
-2013/4/29	昭和の日
-2013/5/3	憲法記念日
-2013/5/4	みどりの日
-2013/5/5	こどもの日
-2013/5/6	休日
-2013/7/15	海の日
-2013/9/16	敬老の日
-2013/9/23	秋分の日
-2013/10/14	体育の日
-2013/11/3	文化の日
-2013/11/4	休日
-2013/11/23	勤労感謝の日
-2013/12/23	天皇誕生日
-2014/1/1	元日
-2014/1/13	成人の日
-2014/2/11	建国記念の日
-2014/3/21	春分の日
-2014/4/29	昭和の日
-2014/5/3	憲法記念日
-2014/5/4	みどりの日
-2014/5/5	こどもの日
-2014/5/6	休日
-2014/7/21	海の日
-2014/9/15	敬老の日
-2014/9/23	秋分の日
-2014/10/13	体育の日
-2014/11/3	文化の日
-2014/11/23	勤労感謝の日
-2014/11/24	休日
-2014/12/23	天皇誕生日
-2015/1/1	元日
-2015/1/12	成人の日
-2015/2/11	建国記念の日
-2015/3/21	春分の日
-2015/4/29	昭和の日
-2015/5/3	憲法記念日
-2015/5/4	みどりの日
-2015/5/5	こどもの日
-2015/5/6	休日
-2015/7/20	海の日
-2015/9/21	敬老の日
-2015/9/22	休日
-2015/9/23	秋分の日
-2015/10/12	体育の日
-2015/11/3	文化の日
-2015/11/23	勤労感謝の日
-2015/12/23	天皇誕生日
-2016/1/1	元日
-2016/1/11	成人の日
-2016/2/11	建国記念の日
-2016/3/20	春分の日
-2016/3/21	休日
-2016/4/29	昭和の日
-2016/5/3	憲法記念日
-2016/5/4	みどりの日
-2016/5/5	こどもの日
-2016/7/18	海の日
-2016/8/11	山の日
-2016/9/19	敬老の日
-2016/9/22	秋分の日
-2016/10/10	体育の日
-2016/11/3	文化の日
-2016/11/23	勤労感謝の日
-2016/12/23	天皇誕生日
-2017/1/1	元日
-2017/1/2	休日
-2017/1/9	成人の日
-2017/2/11	建国記念の日
-2017/3/20	春分の日
-2017/4/29	昭和の日
-2017/5/3	憲法記念日
-2017/5/4	みどりの日
-2017/5/5	こどもの日
-2017/7/17	海の日
-2017/8/11	山の日
-2017/9/18	敬老の日
-2017/9/23	秋分の日
-2017/10/9	体育の日
-2017/11/3	文化の日
-2017/11/23	勤労感謝の日
-2017/12/23	天皇誕生日
-2018/1/1	元日
-2018/1/8	成人の日
-2018/2/11	建国記念の日
-2018/2/12	休日
-2018/3/21	春分の日
-2018/4/29	昭和の日
-2018/4/30	休日
-2018/5/3	憲法記念日
-2018/5/4	みどりの日
-2018/5/5	こどもの日
-2018/7/16	海の日
-2018/8/11	山の日
-2018/9/17	敬老の日
-2018/9/23	秋分の日
-2018/9/24	休日
-2018/10/8	体育の日
-2018/11/3	文化の日
-2018/11/23	勤労感謝の日
-2018/12/23	天皇誕生日
-2018/12/24	休日
-2019/1/1	元日
-2019/1/14	成人の日
-2019/2/11	建国記念の日
-2019/3/21	春分の日
-2019/4/29	昭和の日
-2019/4/30	休日
-2019/5/1	休日（祝日扱い）
-2019/5/2	休日
-2019/5/3	憲法記念日
-2019/5/4	みどりの日
-2019/5/5	こどもの日
-2019/5/6	休日
-2019/7/15	海の日
-2019/8/11	山の日
-2019/8/12	休日
-2019/9/16	敬老の日
-2019/9/23	秋分の日
-2019/10/14	体育の日（スポーツの日）
-2019/10/22	休日（祝日扱い）
-2019/11/3	文化の日
-2019/11/4	休日
-2019/11/23	勤労感謝の日
-2020/1/1	元日
-2020/1/13	成人の日
-2020/2/11	建国記念の日
-2020/2/23	天皇誕生日
-2020/2/24	休日
-2020/3/20	春分の日
-2020/4/29	昭和の日
-2020/5/3	憲法記念日
-2020/5/4	みどりの日
-2020/5/5	こどもの日
-2020/5/6	休日
-2020/7/23	海の日
-2020/7/24	スポーツの日
-2020/8/10	山の日
-2020/9/21	敬老の日
-2020/9/22	秋分の日
-2020/11/3	文化の日
-2020/11/23	勤労感謝の日
-2021/1/1	元日
-2021/1/11	成人の日
-2021/2/11	建国記念の日
-2021/2/23	天皇誕生日
-2021/3/20	春分の日
-2021/4/29	昭和の日
-2021/5/3	憲法記念日
-2021/5/4	みどりの日
-2021/5/5	こどもの日
-2021/7/22	海の日
-2021/7/23	スポーツの日
-2021/8/8	山の日
-2021/8/9	休日
-2021/9/20	敬老の日
-2021/9/23	秋分の日
-2021/11/3	文化の日
-2021/11/23	勤労感謝の日
-2022/1/1	元日
-2022/1/10	成人の日
-2022/2/11	建国記念の日
-2022/2/23	天皇誕生日
-2022/3/21	春分の日
-2022/4/29	昭和の日
-2022/5/3	憲法記念日
-2022/5/4	みどりの日
-2022/5/5	こどもの日
-2022/7/18	海の日
-2022/8/11	山の日
-2022/9/19	敬老の日
-2022/9/23	秋分の日
-2022/10/10	スポーツの日
-2022/11/3	文化の日
-2022/11/23	勤労感謝の日
-2023/1/1	元日
-2023/1/2	休日
-2023/1/9	成人の日
-2023/2/11	建国記念の日
-2023/2/23	天皇誕生日
-2023/3/21	春分の日
-2023/4/29	昭和の日
-2023/5/3	憲法記念日
-2023/5/4	みどりの日
-2023/5/5	こどもの日
-2023/7/17	海の日
-2023/8/11	山の日
-2023/9/18	敬老の日
-2023/9/23	秋分の日
-2023/10/9	スポーツの日
-2023/11/3	文化の日
-2023/11/23	勤労感謝の日
-2024/1/1	元日
-2024/1/8	成人の日
-2024/2/11	建国記念の日
-2024/2/12	休日
-2024/2/23	天皇誕生日
-2024/3/20	春分の日
-2024/4/29	昭和の日
-2024/5/3	憲法記念日
-2024/5/4	みどりの日
-2024/5/5	こどもの日
-2024/5/6	休日
-2024/7/15	海の日
-2024/8/11	山の日
-2024/8/12	休日
-2024/9/16	敬老の日
-2024/9/22	秋分の日
-2024/9/23	休日
-2024/10/14	スポーツの日
-2024/11/3	文化の日
-2024/11/4	休日
-2024/11/23	勤労感謝の日
-2025/1/1	元日
-2025/1/13	成人の日
-2025/2/11	建国記念の日
-2025/2/23	天皇誕生日
-2025/2/24	休日
-2025/3/20	春分の日
-2025/4/29	昭和の日
-2025/5/3	憲法記念日
-2025/5/4	みどりの日
-2025/5/5	こどもの日
-2025/5/6	休日
-2025/7/21	海の日
-2025/8/11	山の日
-2025/9/15	敬老の日
-2025/9/23	秋分の日
-2025/10/13	スポーツの日
-2025/11/3	文化の日
-2025/11/23	勤労感謝の日
-2025/11/24	休日
-2026/1/1	元日
-2026/1/12	成人の日
-2026/2/11	建国記念の日
-2026/2/23	天皇誕生日
-2026/3/20	春分の日
-2026/4/29	昭和の日
-2026/5/3	憲法記念日
-2026/5/4	みどりの日
-2026/5/5	こどもの日
-2026/5/6	休日
-2026/7/20	海の日
-2026/8/11	山の日
-2026/9/21	敬老の日
-2026/9/22	休日
-2026/9/23	秋分の日
-2026/10/12	スポーツの日
-2026/11/3	文化の日
-2026/11/23	勤労感謝の日
 
 
 
